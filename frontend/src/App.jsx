@@ -1,9 +1,11 @@
 import './App.css'
+import PingComponent from './components/atoms/PingComponent';
 
 function App() {
-    return (
+    
+    return ( 
         <>
-            App
+            hello
         </>
     )
 }
