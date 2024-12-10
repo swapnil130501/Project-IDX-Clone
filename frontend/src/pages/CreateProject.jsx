@@ -2,16 +2,20 @@ import React from 'react';
 import useCreateProject from '../hooks/apis/mutations/useCreateProject';
 import { Button, Layout, Card } from 'antd';
 import './CreateProject.css';
+import { useNavigate } from 'react-router-dom';
 
 function CreateProject() {
     const { createProjectMutation } = useCreateProject();
     const { Header, Footer, Content } = Layout;
 
+    const navigate = useNavigate();
+
     async function handleCreateProject() {
         console.log('Going to trigger the API');
         try {
-            await createProjectMutation();
+            const response = await createProjectMutation();
             console.log('Redirect to editor');
+            navigate(`/project/${response.data}`);
         } catch (error) {
             console.log('Error');
         }
