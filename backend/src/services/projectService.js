@@ -2,8 +2,10 @@ import { execPromisified } from '../utils/execUtility.js';
 import { REACT_PROJECT_COMMAND } from '../config/serverConfig.js';
 import fs from 'fs/promises';
 import uuid4 from 'uuid4';
+import directoryTree from 'directory-tree';
+import path from 'path';
 
-const createProjectService = async () => {
+export const createProjectService = async () => {
     // create a unique id and then inside the project folder create a new folder with that id
     const projectId = uuid4();
     console.log("New project id is", projectId);
@@ -18,4 +20,8 @@ const createProjectService = async () => {
     return projectId;
 }
 
-export default createProjectService;
+export const getProjectTreeService = async (projectId) => {
+    const projectPath = path.resolve(`./projects/${projectId}`);
+    const tree = directoryTree(projectPath);
+    return tree;
+}
