@@ -18,24 +18,24 @@ function ProjectPlayground() {
 
     return (
         <>
-            { projectId && (
-                <div 
-                    style={{
-                        backgroundColor: '#333254',
-                        paddingRight: '10px',
-                        paddingTop: '0.3vh',
-                        maxWidth: '25%',
-                        minWidth: '250px',
-                        height: '99.7vh',
-                        overflow: 'auto'
-                    }}
-                >
-                    <TreeStructure />
-                </div>
-            )}
-
-            <EditorButton />
-            <EditorComponent />
+            <div style={{display: 'flex'}}>
+                { projectId && (
+                        <div 
+                            style={{
+                                backgroundColor: '#333254',
+                                paddingRight: '10px',
+                                paddingTop: '0.3vh',
+                                maxWidth: '25%',
+                                minWidth: '250px',
+                                height: '99.7vh',
+                                overflow: 'auto'
+                            }}
+                        >
+                            <TreeStructure />
+                        </div>
+                    )}
+                    <EditorComponent />
+            </div>
         </>
     )
 }
