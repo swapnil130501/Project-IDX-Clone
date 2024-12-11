@@ -37,7 +37,7 @@ function Tree({ data }) {
                             cursor: "pointer",
                             outline: "none",
                             backgroundColor: "transparent",
-                            padding: "10px",
+                            padding: "8px",
                             fontSize: "15px",
                             fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
                             color: expand[data.name] ? "#ff79c6" : "#bd93f9",
@@ -66,7 +66,6 @@ function Tree({ data }) {
                         style={{
                             display: "flex",
                             alignItems: "center",
-                            padding: "5px 0",
                             cursor: "pointer",
                         }}
                     >
@@ -74,14 +73,14 @@ function Tree({ data }) {
                             style={{
                                 display: "flex",
                                 alignItems: "center",
-                                marginRight: "5px",
+                                marginRight: "1px",
                             }}
                         >
                             <FileIcon extension={computeExtension(data)} />
                         </span>
                         <p
                             style={{
-                                marginLeft: "10px",
+                                marginLeft: "5px",
                                 fontSize: "13px",
                                 fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
                                 lineHeight: "1.5",

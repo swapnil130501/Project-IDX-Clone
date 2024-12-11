@@ -3,9 +3,10 @@ import { GrReactjs } from "react-icons/gr";
 
 export const FileIcon = ({ extension }) => {
     const iconStyle = {
-        height: "20px",
-        width: "20px",
-        marginRight: "8px", 
+        height: "16px",
+        width: "16px",
+        marginRight: "5px", 
+        marginLeft: '10px',
         display: "flex",
         alignItems: "center",
     };
