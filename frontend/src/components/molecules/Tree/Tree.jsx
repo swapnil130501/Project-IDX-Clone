@@ -3,50 +3,62 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 
 function Tree({ data }) {
-
     const [expand, setExpand] = useState({});
 
     function handleExpand(name) {
         setExpand({
             ...expand,
-            [name]: !expand[name]
+            [name]: !expand[name],
         });
     }
 
     function computeExtension(data) {
         const names = data.name.split(".");
-        return names[names.length - 1];
+        return names.length > 1 ? names[names.length - 1] : null;
     }
 
     return (
         data && (
-            <div style={{ paddingLeft: '15px', color: 'white' }}>
+            <div
+                style={{
+                    paddingLeft: "15px",
+                    backgroundColor: "#21222C", 
+                    color: "#f8f8f2",
+                }}
+            >
                 {data.children ? (
                     <button
                         onClick={() => handleExpand(data.name)}
                         style={{
-                            border: 'none',
-                            cursor: 'pointer',
-                            outline: 'none',
-                            color: 'white',
-                            backgroundColor: 'transparent',
-                            padding: '15px',
-                            fontSize: '16px',
+                            border: "none",
+                            cursor: "pointer",
+                            outline: "none",
+                            backgroundColor: "transparent",
+                            padding: "10px",
+                            fontSize: "16px",
+                            color: expand[data.name] ? "#ff79c6" : "#bd93f9",
+                            display: "flex",
+                            alignItems: "center",
                         }}
                     >
-                        {expand[data.name] ? <IoIosArrowForward/> : <IoIosArrowDown/>}
-                        {data.name}
+                        {expand[data.name] ? <IoIosArrowDown /> : <IoIosArrowForward />}
+                        <span style={{ marginLeft: "5px" }}>{data.name}</span>
                     </button>
                 ) : (
-                    <div style={{display: 'flex', alignItems: 'center'}}>
-                        <FileIcon extension={computeExtension(data)}/>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "5px 0",
+                            cursor: "pointer",
+                        }}
+                    >
+                        <FileIcon extension={computeExtension(data)} />
                         <p
                             style={{
-                                marginLeft: '5px',
-                                cursor: 'pointer',
-                                paddingTop: '10px',
-                                fontSize: '15px',
-                                color: 'white'
+                                marginLeft: "10px",
+                                fontSize: "15px",
+                                color: "#f8f8f2",
                             }}
                         >
                             {data.name}

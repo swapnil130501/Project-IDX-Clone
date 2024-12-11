@@ -22,7 +22,7 @@ function ProjectPlayground() {
                 { projectId && (
                         <div 
                             style={{
-                                backgroundColor: '#333254',
+                                backgroundColor: '#21222C',
                                 paddingRight: '10px',
                                 paddingTop: '0.3vh',
                                 maxWidth: '25%',
