@@ -28,7 +28,8 @@ function ProjectPlayground() {
                                 maxWidth: '25%',
                                 minWidth: '250px',
                                 height: '99.7vh',
-                                overflow: 'auto'
+                                overflow: 'auto',
+                                border: '1px solid grey'
                             }}
                         >
                             <TreeStructure />

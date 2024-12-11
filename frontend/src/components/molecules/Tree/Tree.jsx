@@ -26,7 +26,7 @@ function Tree({ data }) {
                     color: "#f8f8f2",
                     fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
                     fontSize: "13px", 
-                    lineHeight: "1.5", 
+                    lineHeight: "1.5",
                 }}
             >
                 {data.children ? (
