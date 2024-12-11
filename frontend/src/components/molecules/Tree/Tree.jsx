@@ -22,8 +22,11 @@ function Tree({ data }) {
             <div
                 style={{
                     paddingLeft: "15px",
-                    backgroundColor: "#21222C", 
+                    backgroundColor: "#21222C",
                     color: "#f8f8f2",
+                    fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
+                    fontSize: "13px", 
+                    lineHeight: "1.5", 
                 }}
             >
                 {data.children ? (
@@ -35,14 +38,28 @@ function Tree({ data }) {
                             outline: "none",
                             backgroundColor: "transparent",
                             padding: "10px",
-                            fontSize: "16px",
+                            fontSize: "15px",
+                            fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
                             color: expand[data.name] ? "#ff79c6" : "#bd93f9",
                             display: "flex",
                             alignItems: "center",
+                            lineHeight: "1.5",
                         }}
                     >
-                        {expand[data.name] ? <IoIosArrowDown /> : <IoIosArrowForward />}
-                        <span style={{ marginLeft: "5px" }}>{data.name}</span>
+                        <span
+                            style={{
+                                marginRight: "5px",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {expand[data.name] ? (
+                                <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} /> 
+                            ) : (
+                                <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} />
+                            )}
+                        </span>
+                        {data.name}
                     </button>
                 ) : (
                     <div
@@ -53,11 +70,21 @@ function Tree({ data }) {
                             cursor: "pointer",
                         }}
                     >
-                        <FileIcon extension={computeExtension(data)} />
+                        <span
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                marginRight: "5px",
+                            }}
+                        >
+                            <FileIcon extension={computeExtension(data)} />
+                        </span>
                         <p
                             style={{
                                 marginLeft: "10px",
-                                fontSize: "15px",
+                                fontSize: "13px",
+                                fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
+                                lineHeight: "1.5",
                                 color: "#f8f8f2",
                             }}
                         >
