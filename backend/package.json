@@ -16,6 +16,7 @@
     "directory-tree": "^3.5.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
+    "socket.io": "^4.8.1",
     "uuid4": "^2.0.3"
   },
   "devDependencies": {
