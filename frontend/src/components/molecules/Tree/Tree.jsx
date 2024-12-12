@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
+import { useEditorSocketStore } from "../../../store/editorSocketStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
+    const { editorSocket, editorSocketStore } = useEditorSocketStore();
 
     function handleExpand(name) {
         setExpand({
@@ -15,6 +17,14 @@ function Tree({ data }) {
     function computeExtension(data) {
         const names = data.name.split(".");
         return names.length > 1 ? names[names.length - 1] : null;
+    }
+
+    function handleDoubleClick(data) {
+        editorSocket.emit('readFile', {
+            pathToFileOrFolder: data.path
+        });
+
+        console.log('clicked');
     }
 
     return (
@@ -86,6 +96,7 @@ function Tree({ data }) {
                                 lineHeight: "1.5",
                                 color: "#f8f8f2",
                             }}
+                            onDoubleClick={(() => handleDoubleClick(data))}
                         >
                             {data.name}
                         </p>
