@@ -19,7 +19,7 @@ function Tree({ data }) {
         return names.length > 1 ? names[names.length - 1] : null;
     }
 
-    function handleDoubleClick(data) {
+    function handleClick(data) {
         editorSocket.emit('readFile', {
             pathToFileOrFolder: data.path
         });
@@ -34,8 +34,8 @@ function Tree({ data }) {
                     paddingLeft: "15px",
                     backgroundColor: "#21222C",
                     color: "#f8f8f2",
-                    fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
                     fontSize: "13px", 
+                    fontFamily: "monospace",
                     lineHeight: "1.5",
                 }}
             >
@@ -48,8 +48,8 @@ function Tree({ data }) {
                             outline: "none",
                             backgroundColor: "transparent",
                             padding: "8px",
-                            fontSize: "15px",
-                            fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
+                            fontSize: "17px",
+                            fontFamily: "monospace",
                             color: expand[data.name] ? "#ff79c6" : "#bd93f9",
                             display: "flex",
                             alignItems: "center",
@@ -91,12 +91,12 @@ function Tree({ data }) {
                         <p
                             style={{
                                 marginLeft: "5px",
-                                fontSize: "13px",
-                                fontFamily: "'Fira Code', 'Consolas', 'Courier New', monospace",
+                                fontSize: "15px",
+                                fontFamily: "monospace",
                                 lineHeight: "1.5",
                                 color: "#f8f8f2",
                             }}
-                            onDoubleClick={(() => handleDoubleClick(data))}
+                            onClick={(() => handleClick(data))}
                         >
                             {data.name}
                         </p>

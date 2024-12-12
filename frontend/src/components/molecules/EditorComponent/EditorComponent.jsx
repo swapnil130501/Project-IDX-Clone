@@ -52,7 +52,7 @@ export const EditorComponent = () => {
                     defaultValue='// Welcome to the playground'
                     options={{
                         fontSize: 18,
-                        fontFamily: 'monospace'
+                        fontFamily: 'Code New Roman'
                     }}
                     value={activeFileTab?.value ? activeFileTab.value : '// Welcome to the playground'}
                     onMount={handleEditorTheme}
