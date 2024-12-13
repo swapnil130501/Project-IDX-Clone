@@ -17,28 +17,40 @@ export const handleEditorSocketEvents = (socket, editorNamespace) => {
     });
 
     socket.on('createFile', async ({ pathToFileOrFolder }) => {
-        const isFileAlreadyPresent = await fs.stat(pathToFileOrFolder);
-
-        if(isFileAlreadyPresent) {
+        try {
+            // Check if the file or folder exists
+            await fs.stat(pathToFileOrFolder);
+            
+            // If no error is thrown, the file exists
             socket.emit('error', {
                 data: 'File already exists',
             });
-
             return;
+        } catch (error) {
+            // If the error is ENOENT, it means the file does not exist, which is fine
+            if (error.code !== 'ENOENT') {
+                console.log('Error checking file status:', error);
+                socket.emit('error', {
+                    data: 'Error checking file status',
+                });
+                return;
+            }
         }
-
+    
         try {
-            const response = await fs.writeFile(pathToFileOrFolder, "");
+            // Create the file
+            await fs.writeFile(pathToFileOrFolder, "");
             socket.emit('createFileSuccess', {
                 data: 'File created successfully',
-            })
+            });
         } catch (error) {
-            console.log('Error creating the file', error);
+            console.log('Error creating the file:', error);
             socket.emit('error', {
                 data: 'Error creating the file',
-            })
+            });
         }
     });
+    
 
     socket.on('readFile', async ({ pathToFileOrFolder }) => {
         try {
@@ -59,7 +71,7 @@ export const handleEditorSocketEvents = (socket, editorNamespace) => {
     socket.on('deleteFile', async ({ pathToFileOrFolder }) => {
         try {
             const response = await fs.unlink(pathToFileOrFolder);
-            socket.emit('deleteFileSuccess', {
+            editorNamespace.emit('deleteFileSuccess', {
                 data: 'File deleted successfully',
             })
         } catch (error) {
