@@ -45,7 +45,7 @@ function Tree({ data }) {
                     paddingLeft: "15px",
                     backgroundColor: "#21222C",
                     color: "#f8f8f2",
-                    fontSize: "13px", 
+                    fontSize: "13px",
                     fontFamily: "monospace",
                     lineHeight: "1.5",
                 }}
@@ -59,7 +59,7 @@ function Tree({ data }) {
                             outline: "none",
                             backgroundColor: "transparent",
                             padding: "10px",
-                            marginTop: '5px',
+                            marginTop: "5px",
                             fontSize: "17px",
                             fontFamily: "monospace",
                             color: expand[data.name] ? "#ff79c6" : "#bd93f9",
@@ -76,7 +76,7 @@ function Tree({ data }) {
                             }}
                         >
                             {expand[data.name] ? (
-                                <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} /> 
+                                <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} />
                             ) : (
                                 <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} />
                             )}
@@ -89,32 +89,31 @@ function Tree({ data }) {
                             display: "flex",
                             alignItems: "center",
                             cursor: "pointer",
+                            marginTop: "5px",
+                            padding: "5px 0",
                         }}
+                        onClick={() => handleClick(data)}
+                        onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
                     >
                         <span
                             style={{
                                 display: "flex",
                                 alignItems: "center",
-                                marginRight: "1px",
+                                marginRight: "5px",
                             }}
                         >
                             <FileIcon extension={computeExtension(data)} />
                         </span>
-                        <p
+                        <span
                             style={{
-                                marginLeft: "5px",
                                 fontSize: "15px",
                                 fontFamily: "monospace",
                                 lineHeight: "1.5",
                                 color: "#f8f8f2",
-                                padding: "5px",
-                                marginTop: '10px',
                             }}
-                            onClick={(() => handleClick(data))}
-                            onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
                         >
                             {data.name}
-                        </p>
+                        </span>
                     </div>
                 )}
                 {expand[data.name] &&
