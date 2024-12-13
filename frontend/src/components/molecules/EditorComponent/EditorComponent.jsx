@@ -9,13 +9,12 @@ export const EditorComponent = () => {
         theme: null
     });
 
+    const { activeFileTab } = useActiveFileTabStore();
     const { editorSocket } = useEditorSocketStore();
-    const { activeFileTab, setActiveFileTab } = useActiveFileTabStore();
 
     async function downloadTheme() {
         const response = await fetch('/Dracula.json');
         const data = await response.json();
-        console.log(data);
         setEditorState({ ...editorState, theme: data });
     }
 
@@ -24,19 +23,13 @@ export const EditorComponent = () => {
         monaco.editor.setTheme('dracula');
     }
 
-    useEffect(() => {
-        if (editorSocket) {
-            editorSocket.on('readFileSuccess', (data) => {
-                console.log('read file success', data);
-                setActiveFileTab(data.path, data.value);
-            });
-
-            // Clean up event listeners on unmount
-            return () => {
-                editorSocket.off('readFileSuccess');
-            };
-        }
-    }, [editorSocket]);
+    function handleChange(value) {
+        const editorContent = value;
+        editorSocket.emit('writeFile', {
+            data: editorContent,
+            pathToFileOrFolder: activeFileTab.path
+        })
+    }
 
     useEffect(() => {
         downloadTheme();
@@ -54,6 +47,7 @@ export const EditorComponent = () => {
                         fontSize: 18,
                         fontFamily: 'Code New Roman'
                     }}
+                    onChange={handleChange}
                     value={activeFileTab?.value ? activeFileTab.value : '// Welcome to the playground'}
                     onMount={handleEditorTheme}
                 />
