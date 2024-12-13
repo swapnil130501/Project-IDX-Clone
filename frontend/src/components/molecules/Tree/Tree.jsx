@@ -58,7 +58,8 @@ function Tree({ data }) {
                             cursor: "pointer",
                             outline: "none",
                             backgroundColor: "transparent",
-                            padding: "8px",
+                            padding: "10px",
+                            marginTop: '5px',
                             fontSize: "17px",
                             fontFamily: "monospace",
                             color: expand[data.name] ? "#ff79c6" : "#bd93f9",
@@ -106,6 +107,8 @@ function Tree({ data }) {
                                 fontFamily: "monospace",
                                 lineHeight: "1.5",
                                 color: "#f8f8f2",
+                                padding: "5px",
+                                marginTop: '10px',
                             }}
                             onClick={(() => handleClick(data))}
                             onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
