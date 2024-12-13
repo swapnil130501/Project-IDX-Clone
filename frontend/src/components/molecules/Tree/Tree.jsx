@@ -3,11 +3,13 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
+import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
     const { editorSocket, editorSocketStore } = useEditorSocketStore();
-    const {setX, setY, setIsOpen, setFile} = useFileContextMenuStore();
+    const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
+    const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
 
     function handleExpand(name) {
         setExpand({
@@ -31,11 +33,20 @@ function Tree({ data }) {
 
     function handleContextMenuForFile(e, path) {
         e.preventDefault();
-        console.log('right click on', path);
+        console.log('right click on file', path);
         setFile(path);
-        setX(e.clientX);
-        setY(e.clientY);
-        setIsOpen(true);
+        setFileContextMenuX(e.clientX);
+        setFileContextMenuY(e.clientY);
+        setFileContextMenuIsOpen(true);
+    }
+
+    function handleContextMenuForFolder(e, path) {
+        e.preventDefault();
+        console.log('right click on folder', path);
+        setFolder(path);
+        setFolderContextMenuX(e.clientX);
+        setFolderContextMenuY(e.clientY);
+        setFolderContextMenuIsOpen(true);
     }
 
     return (
@@ -67,6 +78,7 @@ function Tree({ data }) {
                             alignItems: "center",
                             lineHeight: "1.5",
                         }}
+                        onContextMenu={(e) => handleContextMenuForFolder(e, data.path)}
                     >
                         <span
                             style={{

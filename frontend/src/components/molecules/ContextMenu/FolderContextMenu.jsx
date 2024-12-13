@@ -1,18 +1,17 @@
 import React from 'react'
-import { useFileContextMenuStore } from '../../../store/fileContextMenuStore';
-import './ContextMenu.css';
+import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore';
 import { useEditorSocketStore } from '../../../store/editorSocketStore';
+import './ContextMenu.css';
 
-function FileContextMenu( {x, y, path}) {
+function FolderContextMenu( {x, y, path} ) {
 
-    const {setX, setY, setIsOpen, setFile} = useFileContextMenuStore();
+    const {setX, setY, setIsOpen, setFile} = useFolderContextMenuStore();
     const { editorSocket } = useEditorSocketStore();
 
     function handleFileDelete(e) {
-        console.log();
         e.preventDefault();
-        console.log('Deleting file at', path);
-        editorSocket.emit('deleteFile', {
+        console.log('Deleting folder at', path);
+        editorSocket.emit('deleteFolder', {
             pathToFileOrFolder: path
         })
     }
@@ -26,9 +25,11 @@ function FileContextMenu( {x, y, path}) {
             }}
         >
             <button className="fileContextButton" onClick={handleFileDelete}>delete file</button>
+            <button className="fileContextButton" >create file</button>
+            <button className="fileContextButton" >create folder</button>
             <button className="fileContextButton" >rename file</button>
         </div>
     )
 }
 
-export default FileContextMenu
+export default FolderContextMenu
