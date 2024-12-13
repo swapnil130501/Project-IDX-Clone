@@ -5,6 +5,7 @@ import { useActiveFileTabStore } from '../../../store/activeFileTabStore';
 
 export const EditorComponent = () => {
 
+    let timerId = null;
     const [editorState, setEditorState] = useState({
         theme: null
     });
@@ -24,11 +25,18 @@ export const EditorComponent = () => {
     }
 
     function handleChange(value) {
-        const editorContent = value;
-        editorSocket.emit('writeFile', {
-            data: editorContent,
-            pathToFileOrFolder: activeFileTab.path
-        })
+        if(timerId != null) {
+            clearTimeout(timerId);
+        }
+
+        timerId = setTimeout(() => {
+            const editorContent = value;
+            console.log('sending writeFile event')
+            editorSocket.emit('writeFile', {
+                data: editorContent,
+                pathToFileOrFolder: activeFileTab.path
+            })
+        }, 2000)
     }
 
     useEffect(() => {

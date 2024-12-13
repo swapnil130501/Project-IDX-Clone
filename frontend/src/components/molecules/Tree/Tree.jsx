@@ -2,10 +2,12 @@ import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
+import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
     const { editorSocket, editorSocketStore } = useEditorSocketStore();
+    const {setX, setY, setIsOpen, setFile} = useFileContextMenuStore();
 
     function handleExpand(name) {
         setExpand({
@@ -25,6 +27,15 @@ function Tree({ data }) {
         });
 
         console.log('clicked');
+    }
+
+    function handleContextMenuForFile(e, path) {
+        e.preventDefault();
+        console.log('right click on', path);
+        setFile(path);
+        setX(e.clientX);
+        setY(e.clientY);
+        setIsOpen(true);
     }
 
     return (
@@ -97,6 +108,7 @@ function Tree({ data }) {
                                 color: "#f8f8f2",
                             }}
                             onClick={(() => handleClick(data))}
+                            onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
                         >
                             {data.name}
                         </p>
