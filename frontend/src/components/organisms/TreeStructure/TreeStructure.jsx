@@ -5,6 +5,7 @@ import { useFileContextMenuStore } from '../../../store/fileContextMenuStore';
 import FileContextMenu from '../../molecules/ContextMenu/FileContextMenu';
 import FolderContextMenu from '../../molecules/ContextMenu/FolderContextMenu';
 import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore';
+import { CreateFileModal } from '../../molecules/CreateFileModal/CreateFileModal';
 
 function TreeStructure() {
 
@@ -35,6 +36,8 @@ function TreeStructure() {
                     path = {folder}
                 />
             )}
+
+            <CreateFileModal />
 
             <Tree data={treeStructure} />
         </>

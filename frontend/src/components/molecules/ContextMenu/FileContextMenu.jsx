@@ -5,7 +5,7 @@ import { useEditorSocketStore } from '../../../store/editorSocketStore';
 
 function FileContextMenu( {x, y, path}) {
 
-    const {setX, setY, setIsOpen, setFile} = useFileContextMenuStore();
+    const { setIsOpen } = useFileContextMenuStore();
     const { editorSocket } = useEditorSocketStore();
 
     function handleFileDelete(e) {
@@ -25,8 +25,8 @@ function FileContextMenu( {x, y, path}) {
                 top: y,
             }}
         >
-            <button className="contextButton" onClick={handleFileDelete}>delete file</button>
-            <button className="contextButton" >rename file</button>
+            <button className="contextButton" onClick={handleFileDelete}>Delete</button>
+            <button className="contextButton" >Rename...</button>
         </div>
     )
 }

@@ -2,11 +2,13 @@ import React from 'react'
 import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore';
 import { useEditorSocketStore } from '../../../store/editorSocketStore';
 import './ContextMenu.css';
+import { useCreateFileStore } from '../../../store/createFileStore';
 
 function FolderContextMenu( {x, y, path} ) {
 
-    const {setX, setY, setIsOpen, setFile} = useFolderContextMenuStore();
+    const { setIsOpen } = useFolderContextMenuStore();
     const { editorSocket } = useEditorSocketStore();
+    const { setIsModalOpen } = useCreateFileStore();
 
     function handleFileDelete(e) {
         e.preventDefault();
@@ -14,6 +16,11 @@ function FolderContextMenu( {x, y, path} ) {
         editorSocket.emit('deleteFolder', {
             pathToFileOrFolder: path
         })
+    }
+
+    function handleNewFile() {
+        console.log('New file created');
+        setIsModalOpen(true);
     }
 
     return (
@@ -24,10 +31,10 @@ function FolderContextMenu( {x, y, path} ) {
                 top: y,
             }}
         >
-            <button className="contextButton" onClick={handleFileDelete}>delete file</button>
-            <button className="contextButton" >create file</button>
-            <button className="contextButton" >create folder</button>
-            <button className="contextButton" >rename file</button>
+            <button className="contextButton" onClick={handleFileDelete}>Delete</button>
+            <button className="contextButton" onClick={handleNewFile}>New File...</button>
+            <button className="contextButton" >New Folder...</button>
+            <button className="contextButton" >Rename...</button>
         </div>
     )
 }
