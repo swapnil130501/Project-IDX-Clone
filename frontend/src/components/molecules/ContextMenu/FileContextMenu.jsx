@@ -18,15 +18,15 @@ function FileContextMenu( {x, y, path}) {
     }
 
     return (
-        <div className='fileContextOptionsWrapper'
+        <div className='contextOptionsWrapper'
             onMouseLeave={() => setIsOpen(false)}
             style={{
                 left: x,
                 top: y,
             }}
         >
-            <button className="fileContextButton" onClick={handleFileDelete}>delete file</button>
-            <button className="fileContextButton" >rename file</button>
+            <button className="contextButton" onClick={handleFileDelete}>delete file</button>
+            <button className="contextButton" >rename file</button>
         </div>
     )
 }
