@@ -37,6 +37,11 @@ export const useEditorSocketStore = create((set) => ({
             projectTreeStructureSetter();
         });
 
+        incomingSocket?.on('createFolderSuccess', (data) => {
+            console.log('createFolderSuccess', data);
+            projectTreeStructureSetter();
+        });
+
         set({
             editorSocket: incomingSocket
         });

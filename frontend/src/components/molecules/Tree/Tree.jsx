@@ -4,15 +4,15 @@ import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
-import { CreateFileModal } from '../../molecules/CreateFileModal/CreateFileModal';
-import { useCreateFileStore } from "../../../store/createFileStore";
+import { CreateFileModal } from '../CreateInputModal/CreateFileFolderModal';
+import { useCreateFileStore } from "../../../store/createFileFolderStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
     const { editorSocket } = useEditorSocketStore();
     const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
     const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
-    const { isModalOpen, folderPath } = useCreateFileStore();
+    const { isModalOpen, folderPath, isFolderCreation} = useCreateFileStore();
 
     function handleExpand(name) {
         setExpand({
@@ -102,7 +102,7 @@ function Tree({ data }) {
 
                         {isModalOpen && folderPath === data.path && (
                             <div>
-                                <CreateFileModal />
+                                <CreateFileModal isFolderCreation={isFolderCreation} />
                             </div>
                         )}
                         
