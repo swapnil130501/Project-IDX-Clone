@@ -5,14 +5,13 @@ import { useFileContextMenuStore } from '../../../store/fileContextMenuStore';
 import FileContextMenu from '../../molecules/ContextMenu/FileContextMenu';
 import FolderContextMenu from '../../molecules/ContextMenu/FolderContextMenu';
 import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore';
-import { CreateFileModal } from '../../molecules/CreateFileModal/CreateFileModal';
 
 function TreeStructure() {
 
     const { treeStructure, setTreeStructure } = useTreeStructureStore();
     const { isOpen: isFileContextMenuIsOpen, x: fileContextX, y: fileContextY, file} = useFileContextMenuStore();
     const { x: folderContextX, y: folderContextY, isOpen: isFolderContextMenuIsOpen, folder} = useFolderContextMenuStore();
-
+    
     useEffect(() => {
         if (!treeStructure) {
             setTreeStructure();
@@ -36,9 +35,7 @@ function TreeStructure() {
                     path = {folder}
                 />
             )}
-
-            <CreateFileModal />
-
+        
             <Tree data={treeStructure} />
         </>
     );

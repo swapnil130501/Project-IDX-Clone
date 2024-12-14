@@ -1,18 +1,9 @@
 import { create } from "zustand";
 
 export const useCreateFileStore = create((set) => ({
-    createdFileName: "",
     isModalOpen: false,
-
-    setCreatedFileName: (fileName) => {
-        set({
-            createdFileName: fileName
-        })
-    },
-
-    setIsModalOpen: (isOpen) => {
-        set({
-            isModalOpen: isOpen
-        })
-    }
+    folderPath: null, 
+    setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
+    setFolderPath: (path) => set({ folderPath: path }),
+    setCreatedFileName: (name) => set({ createdFileName: name }),
 }));

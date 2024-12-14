@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useCreateFileStore } from "../../../store/createFileStore"
-import { Modal } from 'antd';
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
+import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 
 export const CreateFileModal = () => {
     const { isModalOpen, setIsModalOpen, setCreatedFileName } = useCreateFileStore();
@@ -10,18 +10,19 @@ export const CreateFileModal = () => {
     const { editorSocket } = useEditorSocketStore();
     const { folder } = useFolderContextMenuStore();
 
-    function handleOk() {
-        if(inputValue) {
-            console.log('creating new file', inputValue);
-            console.log(folder)
+    function handleKeyDown(e) {
+        if (e.key === "Enter" && inputValue) {
+            console.log("Creating new file", inputValue);
+            console.log(folder);
             editorSocket.emit("createFile", {
-                pathToFileOrFolder: folder+"/"+inputValue,
+                pathToFileOrFolder: `${folder}/${inputValue}`,
             });
             setCreatedFileName(inputValue);
+            setIsModalOpen(false);
+            setInputValue("");
+        } else if (e.key === "Escape") {
+            handleClose();
         }
-
-        setIsModalOpen(false);
-        setInputValue("");
     }
 
     function handleClose() {
@@ -29,18 +30,29 @@ export const CreateFileModal = () => {
         setInputValue("");
     }
 
+    if (!isModalOpen) return null;
+
     return (
-        <>
-            <Modal title="Create New File" onOk={handleOk} onClose={handleClose} open={isModalOpen}>
-                <input
-                    type="text"
-                    value={inputValue}
-                    placeholder="Enter file name"
-                    onChange={(e) => setInputValue(e.target.value)}
-                >
-                
-                </input>
-            </Modal>
-        </>
-    )
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            <FileIcon extension={undefined} />
+            <input
+                type="text"
+                autoFocus
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Enter file name"
+                style={{
+                    marginLeft: '5px', 
+                    width: '100%',
+                    height: '25px',
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#ffffff',
+                    outline: 'none',
+                    fontSize: '15px',
+                }}
+            />
+        </div>
+    );
 }

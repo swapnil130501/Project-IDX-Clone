@@ -8,7 +8,7 @@ function FolderContextMenu( {x, y, path} ) {
 
     const { setIsOpen } = useFolderContextMenuStore();
     const { editorSocket } = useEditorSocketStore();
-    const { setIsModalOpen } = useCreateFileStore();
+    const { setIsModalOpen, setFolderPath } = useCreateFileStore();
 
     function handleFileDelete(e) {
         e.preventDefault();
@@ -21,6 +21,7 @@ function FolderContextMenu( {x, y, path} ) {
     function handleNewFile() {
         console.log('New file created');
         setIsModalOpen(true);
+        setFolderPath(path);
     }
 
     return (

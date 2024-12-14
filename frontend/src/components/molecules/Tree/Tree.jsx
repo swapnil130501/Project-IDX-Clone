@@ -4,12 +4,15 @@ import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
+import { CreateFileModal } from '../../molecules/CreateFileModal/CreateFileModal';
+import { useCreateFileStore } from "../../../store/createFileStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
-    const { editorSocket, editorSocketStore } = useEditorSocketStore();
+    const { editorSocket } = useEditorSocketStore();
     const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
     const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
+    const { isModalOpen, folderPath } = useCreateFileStore();
 
     function handleExpand(name) {
         setExpand({
@@ -62,39 +65,48 @@ function Tree({ data }) {
                 }}
             >
                 {data.children ? (
-                    <button
-                        onClick={() => handleExpand(data.name)}
-                        style={{
-                            border: "none",
-                            cursor: "pointer",
-                            outline: "none",
-                            backgroundColor: "transparent",
-                            padding: "10px",
-                            marginTop: "5px",
-                            fontSize: "17px",
-                            fontFamily: "monospace",
-                            color: expand[data.name] ? "#ff79c6" : "#bd93f9",
-                            display: "flex",
-                            alignItems: "center",
-                            lineHeight: "1.5",
-                        }}
-                        onContextMenu={(e) => handleContextMenuForFolder(e, data.path)}
-                    >
-                        <span
+                    <div>
+                        <button
+                            onClick={() => handleExpand(data.name)}
                             style={{
-                                marginRight: "5px",
+                                border: "none",
+                                cursor: "pointer",
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                padding: "10px",
+                                marginTop: "5px",
+                                fontSize: "17px",
+                                fontFamily: "monospace",
+                                color: expand[data.name] ? "#ff79c6" : "#bd93f9",
                                 display: "flex",
                                 alignItems: "center",
+                                lineHeight: "1.5",
                             }}
+                            onContextMenu={(e) => handleContextMenuForFolder(e, data.path)}
                         >
-                            {expand[data.name] ? (
-                                <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} />
-                            ) : (
-                                <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} />
-                            )}
-                        </span>
-                        {data.name}
-                    </button>
+                            <span
+                                style={{
+                                    marginRight: "5px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                {expand[data.name] ? (
+                                    <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} />
+                                ) : (
+                                    <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} />
+                                )}
+                            </span>
+                            {data.name}
+                        </button>
+
+                        {isModalOpen && folderPath === data.path && (
+                            <div>
+                                <CreateFileModal />
+                            </div>
+                        )}
+                        
+                    </div>
                 ) : (
                     <div
                         style={{
@@ -128,6 +140,7 @@ function Tree({ data }) {
                         </span>
                     </div>
                 )}
+
                 {expand[data.name] &&
                     data.children?.length > 0 &&
                     data.children.map((it) => <Tree data={it} key={it.name} />)}
