@@ -7,11 +7,17 @@ import { useTreeStructureStore } from '../store/treeStructureStore';
 import { useEditorSocketStore } from '../store/editorSocketStore.js';
 import io from 'socket.io-client';
 import BrowserTerminal from '../components/molecules/BrowserTerminal/BrowserTerminal.jsx';
+import { useTerminalSocketStore } from '../store/terminalSocketStore.js';
 
 function ProjectPlayground() {
     const {projectId: projectIdFromUrl } = useParams();
     const { setProjectId, projectId } = useTreeStructureStore();
-    const { editorSocket, setEditorSocket } = useEditorSocketStore();
+    const {setEditorSocket, editorSocket} = useEditorSocketStore();
+    const { setTerminalSocket, terminalSocket } = useTerminalSocketStore();
+
+    function fetchPort() {
+        editorSocket.emit('getPort');
+    }
 
     useEffect(() => {
         if (projectIdFromUrl) {
@@ -21,11 +27,11 @@ function ProjectPlayground() {
                     projectId: projectIdFromUrl
                 }
             });
-
+            const ws = new WebSocket("ws://localhost:3000/terminal?projectId="+projectIdFromUrl);
+            setTerminalSocket(ws);
             setEditorSocket(editorSocketConnection);
         }
-    }, [setProjectId, projectIdFromUrl, setEditorSocket]);
-
+    }, [setProjectId, projectIdFromUrl, setEditorSocket, setTerminalSocket]);
 
     return (
         <>
@@ -52,6 +58,10 @@ function ProjectPlayground() {
             <div>
                 <BrowserTerminal/>
             </div>
+
+            <button onClick={fetchPort}>
+                get port
+            </button>
         </>
     )
 }
