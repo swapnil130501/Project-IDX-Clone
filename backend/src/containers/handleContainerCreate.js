@@ -1,19 +1,35 @@
-import Docker from "dockerode";
-
+import Docker from 'dockerode';
 const docker = new Docker();
 
-export const handleContainerCreate = async(projectId, socket) => {
-    try {
-        console.log('project id received for container create', projectId);
+export const listContainer = async () => {
+
+    const containers = await docker.listContainers();
+    console.log("Containers", containers);
+    // PRINT PORTS ARRAY FROM ALL CONTAINER
+    containers.forEach((containerInfo) => {
+        console.log(containerInfo.Ports);
+    })
+}
+
+export const handleContainerCreate = async (projectId, terminalSocket, req, tcpSocket, head) => {
+    console.log("Project id received for container create", projectId);
     
+    try {
         const container = await docker.createContainer({
-            Image: 'sandbox',
+            Image: 'sandbox', // name given by us for the written dockerfile
             AttachStdin: true,
             AttachStdout: true,
             AttachStderr: true,
-            CMD: ['/bin/bash'],
+            Cmd: ['/bin/bash'],
             Tty: true,
-            User: 'sandbox',
+            User: "sandbox",
+            Volumes: {
+                "/home/sandbox/app": {}
+            },
+            ExposedPorts: {
+                    "5173/tcp": {}
+            },
+            Env: ["HOST=0.0.0.0"],
             HostConfig: {
                 Binds: [ // mounting the project directory to the container
                     `${process.cwd()}/projects/${projectId}:/home/sandbox/app`
@@ -25,63 +41,25 @@ export const handleContainerCreate = async(projectId, socket) => {
                         }
                     ]
                 },
-                ExposedPorts: {
-                    "5173/tcp": {}
-                },
-                Env: ["HOST=0.0.0.0"]
+                
             }
         });
     
-        console.log("container created", container.id);
+        console.log("Container created", container.id);
+
         await container.start();
-        console.log('container started successfully');
 
-        container.exec({
-            Cmd: ['/bin/bash'],
-            User: 'sandbox',
-            AttachStdin: true,
-            AttachStdout: true,
-            AttachStderr: true,
-        }, (err, exec) => {
-            if(err) {
-                console.log('error while creating exec', err);
-                return;
-            }
+        console.log("container started");
 
-            exec.start({ hijack: true }, (err, stream) => {
-                if(err) {
-                    console.log('error while starting exec', err);
-                    return;
-                }
+        // Below is the place where we upgrade the connection to websocket
+        terminalSocket.handleUpgrade(req, tcpSocket, head, (establishedWSConn) => {
+            console.log("Connection upgraded to websocket");
+            terminalSocket.emit("connection", establishedWSConn, req, container);
+        });
 
-                processStream(stream, socket);
-
-                socket.on('shell-input', (data) => {
-                    stream.write('ls\n');
-                });
-            })
-        })
-
-    } catch (error) {
-        console.log('error while creating container', error)
+    } catch(error) {
+        console.log("Error while creating container", error);
     }
-}
 
-function processStream(stream, socket) {
-    let buffer = Buffer.from('');
-    stream.on('data', (data) => {
-        buffer = Buffer.concat([buffer, data]);
-        socket.emit('shell-output', buffer.toString());
-        buffer = Buffer.from('');
-    });
 
-    stream.on('end', () => {
-        console.log('stream ended');
-        socket.emit('shell-output', 'stream ended');
-    });
-
-    stream.on('error', () => {
-        console.log('stream closed', err);
-        socket.emit('shell-output', 'stream err');
-    });
 }
