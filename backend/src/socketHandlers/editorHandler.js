@@ -1,18 +1,73 @@
 import fs from 'fs/promises';
 
 export const handleEditorSocketEvents = (socket, editorNamespace) => {
-    socket.on('writeFile', async ({ data, pathToFileOrFolder }) => {
+    // Join a room based on projectId and filePath
+    socket.on('joinRoom', ({ projectId, filePath }) => {
+        const roomId = `${projectId}:${filePath}`;
+        socket.join(roomId); // User joins the room
+        console.log(`User joined room: ${roomId}`);
+        socket.emit('joinRoomSuccess', { roomId });
+    });
+
+    // Write file
+    socket.on('writeFile', async ({ data, pathToFileOrFolder, projectId }) => {
+        const roomId = `${projectId}:${pathToFileOrFolder}`;
         try {
-            const response = await fs.writeFile(pathToFileOrFolder, data);
-            editorNamespace.emit('writeFileSuccess', {
+            await fs.writeFile(pathToFileOrFolder, data);
+    
+            // Emit success to users in the room
+            editorNamespace.to(roomId).emit('writeFileSuccess', {
                 data: 'File written successfully',
                 path: pathToFileOrFolder,
-            })
+                projectId: projectId,
+            });
+    
+            // After writing, send a readFile request to the room
+            editorNamespace.to(roomId).emit('readFile', {
+                pathToFileOrFolder: pathToFileOrFolder,
+                projectId: projectId,
+            });
         } catch (error) {
             console.log('Error writing the file', error);
-            socket.emit('error', {
-                data: 'Error writing the file',
-            })
+            socket.emit('error', { data: 'Error writing the file' });
+        }
+    });
+
+    // Read file
+    socket.on('readFile', async ({ pathToFileOrFolder, projectId }) => {
+        const roomId = `${projectId}:${pathToFileOrFolder}`;
+        console.log(roomId);
+        try {
+            const response = await fs.readFile(pathToFileOrFolder);
+            console.log(response.toString());
+            
+            // Emit the updated file content to all users in the room
+            editorNamespace.to(roomId).emit('readFileSuccess', {
+                value: response.toString(),
+                path: pathToFileOrFolder,
+            });
+    
+            console.log(`File read successfully for room: ${roomId}`);
+        } catch (error) {
+            console.log('Error reading the file', error);
+    
+            // Emit the error only to the user who requested the read
+            socket.emit('error', { data: 'Error reading the file' });
+        }
+    });
+    
+
+    // Delete file
+    socket.on('deleteFile', async ({ pathToFileOrFolder, projectId }) => {
+        const roomId = `${projectId}:${pathToFileOrFolder}`;
+        try {
+            await fs.unlink(pathToFileOrFolder);
+            editorNamespace.to(roomId).emit('deleteFileSuccess', {
+                data: 'File deleted successfully',
+            }); // Notify only users in the room
+        } catch (error) {
+            console.log('Error deleting the file', error);
+            socket.emit('error', { data: 'Error deleting the file' });
         }
     });
 
@@ -52,35 +107,35 @@ export const handleEditorSocketEvents = (socket, editorNamespace) => {
     });
     
 
-    socket.on('readFile', async ({ pathToFileOrFolder }) => {
-        try {
-            const response = await fs.readFile(pathToFileOrFolder);
-            console.log(response.toString());
-            socket.emit('readFileSuccess', {
-                value: response.toString(),
-                path: pathToFileOrFolder
-            })
-        } catch (error) {
-            console.log('Error reading the file', error);
-            socket.emit('error', {
-                data: 'Error reading the file',
-            })
-        }
-    });
+    // socket.on('readFile', async ({ pathToFileOrFolder }) => {
+    //     try {
+    //         const response = await fs.readFile(pathToFileOrFolder);
+    //         console.log(response.toString());
+    //         socket.emit('readFileSuccess', {
+    //             value: response.toString(),
+    //             path: pathToFileOrFolder
+    //         })
+    //     } catch (error) {
+    //         console.log('Error reading the file', error);
+    //         socket.emit('error', {
+    //             data: 'Error reading the file',
+    //         })
+    //     }
+    // });
 
-    socket.on('deleteFile', async ({ pathToFileOrFolder }) => {
-        try {
-            const response = await fs.unlink(pathToFileOrFolder);
-            editorNamespace.emit('deleteFileSuccess', {
-                data: 'File deleted successfully',
-            })
-        } catch (error) {
-            console.log('Error deleting the file', error);
-            socket.emit('error', {
-                data: 'Error deleting the file',
-            })
-        }
-    });
+    // socket.on('deleteFile', async ({ pathToFileOrFolder }) => {
+    //     try {
+    //         const response = await fs.unlink(pathToFileOrFolder);
+    //         editorNamespace.emit('deleteFileSuccess', {
+    //             data: 'File deleted successfully',
+    //         })
+    //     } catch (error) {
+    //         console.log('Error deleting the file', error);
+    //         socket.emit('error', {
+    //             data: 'Error deleting the file',
+    //         })
+    //     }
+    // });
 
     socket.on('createFolder', async ({ pathToFileOrFolder }) => {
         try {
