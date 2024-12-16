@@ -6,6 +6,7 @@ import TreeStructure from '../components/organisms/TreeStructure/TreeStructure';
 import { useTreeStructureStore } from '../store/treeStructureStore';
 import { useEditorSocketStore } from '../store/editorSocketStore.js';
 import io from 'socket.io-client';
+import BrowserTerminal from '../components/molecules/BrowserTerminal/BrowserTerminal.jsx';
 
 function ProjectPlayground() {
     const {projectId: projectIdFromUrl } = useParams();
@@ -15,7 +16,7 @@ function ProjectPlayground() {
     useEffect(() => {
         if (projectIdFromUrl) {
             setProjectId(projectIdFromUrl);
-            const editorSocketConnection = io(`${import.meta.env.VITE_BACKEND_URL}/editor?`, {
+            const editorSocketConnection = io(`${import.meta.env.VITE_BACKEND_URL}/editor`, {
                 query: {
                     projectId: projectIdFromUrl
                 }
@@ -46,6 +47,10 @@ function ProjectPlayground() {
                         </div>
                     )}
                     <EditorComponent />
+            </div>
+
+            <div>
+                <BrowserTerminal/>
             </div>
         </>
     )
