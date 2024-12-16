@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
@@ -6,6 +6,7 @@ import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
 import { CreateFileModal } from '../CreateInputModal/CreateFileFolderModal';
 import { useCreateFileStore } from "../../../store/createFileFolderStore";
+import { useTreeStructureStore } from "../../../store/treeStructureStore";
 
 function Tree({ data }) {
     const [expand, setExpand] = useState({});
@@ -13,6 +14,8 @@ function Tree({ data }) {
     const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
     const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
     const { isModalOpen, folderPath, isFolderCreation} = useCreateFileStore();
+    const { projectId } = useTreeStructureStore();
+    const currentRoomRef = useRef(null); // Track the current room
 
     function handleExpand(name) {
         setExpand({
@@ -27,11 +30,25 @@ function Tree({ data }) {
     }
 
     function handleClick(data) {
-        editorSocket.emit('readFile', {
-            pathToFileOrFolder: data.path
-        });
+        const roomId = `${projectId}:${data.path}`;
 
-        console.log('clicked');
+        // Check if already in the room
+        if (currentRoomRef.current !== roomId) {
+            // Join the new room
+            editorSocket.emit("joinRoom", {
+                projectId: projectId,
+                filePath: data.path,
+            });
+            console.log(`Joined room: ${roomId}`);
+            currentRoomRef.current = roomId; // Update the current room ref
+        }
+
+        // Perform the file read operation
+        editorSocket.emit("readFile", {
+            projectId: projectId,
+            pathToFileOrFolder: data.path,
+        });
+        console.log(`Read file: ${data.path}`);
     }
 
     function handleContextMenuForFile(e, path) {

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useEditorSocketStore } from '../../../store/editorSocketStore';
 import { useActiveFileTabStore } from '../../../store/activeFileTabStore';
 import { extensionToFileType } from '../../../utils/extensionToFile';
+import { useTreeStructureStore } from '../../../store/treeStructureStore';
 
 export const EditorComponent = () => {
 
@@ -13,6 +14,7 @@ export const EditorComponent = () => {
 
     const { activeFileTab } = useActiveFileTabStore();
     const { editorSocket } = useEditorSocketStore();
+    const { projectId } = useTreeStructureStore();
 
     async function downloadTheme() {
         const response = await fetch('/Dracula.json');
@@ -33,9 +35,11 @@ export const EditorComponent = () => {
         timerId = setTimeout(() => {
             const editorContent = value;
             console.log('sending writeFile event')
+            console.log("activeFileTab path:", activeFileTab?.path);
             editorSocket.emit('writeFile', {
                 data: editorContent,
-                pathToFileOrFolder: activeFileTab.path
+                pathToFileOrFolder: activeFileTab.path,
+                projectId: projectId
             })
         }, 2000)
     }
