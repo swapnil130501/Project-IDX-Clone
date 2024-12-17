@@ -1,69 +1,55 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { EditorComponent } from '../components/molecules/EditorComponent/EditorComponent';
-import EditorButton from '../components/atoms/EditorButton/EditorButton';
 import TreeStructure from '../components/organisms/TreeStructure/TreeStructure';
+import BrowserTerminal from '../components/molecules/BrowserTerminal/BrowserTerminal';
 import { useTreeStructureStore } from '../store/treeStructureStore';
-import { useEditorSocketStore } from '../store/editorSocketStore.js';
+import { useEditorSocketStore } from '../store/editorSocketStore';
+import { useTerminalSocketStore } from '../store/terminalSocketStore';
 import io from 'socket.io-client';
-import BrowserTerminal from '../components/molecules/BrowserTerminal/BrowserTerminal.jsx';
-import { useTerminalSocketStore } from '../store/terminalSocketStore.js';
+import './ProjectPlayground.css';
 
 function ProjectPlayground() {
-    const {projectId: projectIdFromUrl } = useParams();
+    const { projectId: projectIdFromUrl } = useParams();
     const { setProjectId, projectId } = useTreeStructureStore();
-    const {setEditorSocket, editorSocket} = useEditorSocketStore();
-    const { setTerminalSocket, terminalSocket } = useTerminalSocketStore();
-
-    function fetchPort() {
-        editorSocket.emit('getPort');
-    }
+    const { setEditorSocket } = useEditorSocketStore();
+    const { setTerminalSocket } = useTerminalSocketStore();
 
     useEffect(() => {
         if (projectIdFromUrl) {
             setProjectId(projectIdFromUrl);
             const editorSocketConnection = io(`${import.meta.env.VITE_BACKEND_URL}/editor`, {
-                query: {
-                    projectId: projectIdFromUrl
-                }
+                query: { projectId: projectIdFromUrl },
             });
-            const ws = new WebSocket("ws://localhost:3000/terminal?projectId="+projectIdFromUrl);
+            const ws = new WebSocket("ws://localhost:3000/terminal?projectId=" + projectIdFromUrl);
             setTerminalSocket(ws);
             setEditorSocket(editorSocketConnection);
         }
-    }, [setProjectId, projectIdFromUrl, setEditorSocket, setTerminalSocket]);
+    }, [projectIdFromUrl, setProjectId, setEditorSocket, setTerminalSocket]);
 
     return (
-        <>
-            <div style={{display: 'flex'}}>
-                { projectId && (
-                        <div 
-                            style={{
-                                backgroundColor: '#21222C',
-                                paddingRight: '10px',
-                                paddingTop: '0.3vh',
-                                maxWidth: '25%',
-                                minWidth: '250px',
-                                height: '99.7vh',
-                                overflow: 'auto',
-                                border: '1px solid grey'
-                            }}
-                        >
-                            <TreeStructure />
-                        </div>
-                    )}
+        <div className="project-playground">
+            {/* Sidebar */}
+            {projectId && (
+                    <div className="tree-structure">
+                        <TreeStructure />
+                    </div>
+            )}
+
+            {/* Main Content */}
+            <div className="playground-content">
+                {/* Editor */}
+                <div className="editor-component">
                     <EditorComponent />
-            </div>
+                </div>
 
-            <div>
-                <BrowserTerminal/>
+                {/* Bottom Terminal */}
+                <div className="browser-terminal">
+                    <BrowserTerminal />
+                </div>
             </div>
-
-            <button onClick={fetchPort}>
-                get port
-            </button>
-        </>
-    )
+        </div>
+    );
 }
 
-export default ProjectPlayground
+export default ProjectPlayground;

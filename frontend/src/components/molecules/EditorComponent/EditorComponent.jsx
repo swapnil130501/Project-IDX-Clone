@@ -52,8 +52,7 @@ export const EditorComponent = () => {
                     defaultLanguage={undefined}
                     defaultValue='// Welcome to the playground'
                     options={{
-                        fontSize: 18,
-                        fontFamily: 'Code New Roman'
+                        fontSize: 16,
                     }}
                     language={extensionToFileType(activeFileTab?.extension)}
                     onChange={handleChange}

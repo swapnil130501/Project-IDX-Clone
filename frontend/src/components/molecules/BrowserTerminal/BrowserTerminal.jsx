@@ -11,6 +11,8 @@ function BrowserTerminal() {
     const { terminalSocket } = useTerminalSocketStore();
 
     useEffect(() => {
+        if (!terminalRef.current) return;
+
         const term = new Terminal({
             cursorBlink: true,
             theme: {

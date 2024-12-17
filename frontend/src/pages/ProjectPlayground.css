@@ -1,0 +1,95 @@
+/* General Layout */
+.project-playground {
+    display: flex;
+    height: 100vh;
+    font-family: 'Fira Code', monospace;
+    background-color: #1e1e2e; /* Dark background */
+    color: #f8f8f2;
+}
+
+/* Sidebar (Tree Structure) */
+.tree-structure {
+    background-color: #21222c;
+    color: #f8f8f2;
+    width: 250px; /* Fixed width */
+    border-right: 1px solid #3e3e54;
+    overflow-y: auto; /* Scrollable */
+    padding: 0.5rem;
+}
+
+/* Main Content (Editor + Terminal) */
+.playground-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Occupies full remaining space */
+    height: 100%;
+    background-color: #282a36;
+}
+
+/* Editor Component */
+.editor-component {
+    flex: 1; /* Takes up the remaining space */
+    position: relative;
+    overflow: hidden;
+    background-color: #282a36;
+}
+
+/* Bottom Terminal */
+.browser-terminal {
+    height: 25vh; /* Fixed height */
+    background-color: #21222c;
+    border-top: 1px solid #3e3e54;
+    padding: 0.5rem;
+    overflow: auto;
+}
+/* Scrollbar General Styling */
+::-webkit-scrollbar {
+    width: 8px; /* Vertical scrollbar width */
+    height: 8px; /* Horizontal scrollbar height */
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+    background: #2c2f38; /* Darker track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar Thumb */
+::-webkit-scrollbar-thumb {
+    background: #44475a; /* Scrollbar thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar Thumb on Hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #6272a4; /* Slightly lighter shade on hover */
+}
+
+/* Tree Structure (Sidebar) Scrollbar */
+.tree-structure::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tree-structure::-webkit-scrollbar-thumb {
+    background: #6272a4;
+    border-radius: 10px;
+}
+
+.tree-structure::-webkit-scrollbar-thumb:hover {
+    background: #8be9fd;
+}
+
+/* Browser Terminal Scrollbar */
+.browser-terminal::-webkit-scrollbar {
+    height: 8px; /* Smaller scrollbar for the bottom terminal */
+}
+
+.browser-terminal::-webkit-scrollbar-thumb {
+    background: #44475a;
+    border-radius: 10px;
+}
+
+.browser-terminal::-webkit-scrollbar-thumb:hover {
+    background: #50fa7b;
+}
+
