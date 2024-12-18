@@ -4,12 +4,14 @@ import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { IoIosArrowForward } from "react-icons/io";
+import { useExpandTreeStore } from "../../../store/expandTreeStore";
 
 export const CreateFileModal = ({ isFolderCreation = false }) => {
     const { isModalOpen, setIsModalOpen, setCreatedFileName } = useCreateFileStore();
     const [inputValue, setInputValue] = useState("");
     const { editorSocket } = useEditorSocketStore();
     const { folder } = useFolderContextMenuStore();
+    const { setExpanded } = useExpandTreeStore();
 
     function handleKeyDown(e) {
         if (e.key === "Enter" && inputValue) {
@@ -23,6 +25,9 @@ export const CreateFileModal = ({ isFolderCreation = false }) => {
             setCreatedFileName(inputValue);
             setIsModalOpen(false);
             setInputValue("");
+            const parentFolderName = folder.split("\\").pop();
+            console.log("Parent Folder Name:", parentFolderName);
+            setExpanded(parentFolderName, true);
         } else if (e.key === "Escape") {
             handleClose();
         }

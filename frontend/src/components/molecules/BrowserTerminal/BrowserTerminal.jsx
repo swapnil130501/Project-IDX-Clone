@@ -4,6 +4,7 @@ import { FitAddon } from '@xterm/addon-fit';
 import "@xterm/xterm/css/xterm.css"; // required styles
 import { AttachAddon } from '@xterm/addon-attach';
 import { useTerminalSocketStore } from '../../../store/terminalSocketStore.js';
+import './BrowserTerminal.css';
 
 function BrowserTerminal() {
 

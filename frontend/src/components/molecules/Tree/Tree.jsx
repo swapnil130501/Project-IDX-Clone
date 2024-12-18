@@ -1,24 +1,23 @@
-import { useState } from "react";
+import React from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FileIcon } from "../../atoms/FileIcon/FileIcon";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
-import { CreateFileModal } from '../CreateInputModal/CreateFileFolderModal';
+import { CreateFileModal } from "../CreateInputModal/CreateFileFolderModal";
 import { useCreateFileStore } from "../../../store/createFileFolderStore";
+import { useExpandTreeStore } from "../../../store/expandTreeStore";
 
 function Tree({ data }) {
-    const [expand, setExpand] = useState({});
     const { editorSocket } = useEditorSocketStore();
     const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
     const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
-    const { isModalOpen, folderPath, isFolderCreation} = useCreateFileStore();
+    const { isModalOpen, folderPath, isFolderCreation } = useCreateFileStore();
+
+    const { expand, toggleExpand, setExpanded } = useExpandTreeStore();
 
     function handleExpand(name) {
-        setExpand({
-            ...expand,
-            [name]: !expand[name],
-        });
+        toggleExpand(name);
     }
 
     function computeExtension(data) {
@@ -27,16 +26,16 @@ function Tree({ data }) {
     }
 
     function handleClick(data) {
-        editorSocket.emit('readFile', {
-            pathToFileOrFolder: data.path
+        editorSocket.emit("readFile", {
+            pathToFileOrFolder: data.path,
         });
 
-        console.log('clicked');
+        console.log("clicked");
     }
 
     function handleContextMenuForFile(e, path) {
         e.preventDefault();
-        console.log('right click on file', path);
+        console.log("right click on file", path);
         setFile(path);
         setFileContextMenuX(e.clientX);
         setFileContextMenuY(e.clientY);
@@ -45,7 +44,7 @@ function Tree({ data }) {
 
     function handleContextMenuForFolder(e, path) {
         e.preventDefault();
-        console.log('right click on folder', path);
+        console.log("right click on folder", path);
         setFolder(path);
         setFolderContextMenuX(e.clientX);
         setFolderContextMenuY(e.clientY);
@@ -105,7 +104,6 @@ function Tree({ data }) {
                                 <CreateFileModal isFolderCreation={isFolderCreation} />
                             </div>
                         )}
-                        
                     </div>
                 ) : (
                     <div
