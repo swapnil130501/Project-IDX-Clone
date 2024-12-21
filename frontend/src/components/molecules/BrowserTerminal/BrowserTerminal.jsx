@@ -26,7 +26,7 @@ function BrowserTerminal() {
                 yellow: "#f1fa8c",
                 cyan: "#8be9fd",
             },
-            fontSize: 16,
+            fontSize: 14,
             fontFamily: "monospace",
             convertEol: true, // convert CRLF to LF
         });
@@ -45,6 +45,7 @@ function BrowserTerminal() {
 
         return () => {
             term.dispose();
+            terminalSocket?.close();
         }
     }, [terminalSocket]);
 
@@ -52,15 +53,9 @@ function BrowserTerminal() {
 
         <div
             ref={terminalRef}
-            style={{
-                width: '100%',
-                height: '25vh',
-                overflow: 'auto'
-            }}
             className='terminal'
             id='terminal-container'
         >
-
         </div>
     )
 }

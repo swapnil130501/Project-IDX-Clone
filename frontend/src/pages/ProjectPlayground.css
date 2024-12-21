@@ -3,7 +3,7 @@
     display: flex;
     height: 100vh;
     font-family: 'Fira Code', monospace;
-    background-color: #1e1e2e; /* Dark background */
+    background-color: #1e1e2e;
     color: #f8f8f2;
 }
 
@@ -11,61 +11,95 @@
 .tree-structure {
     background-color: #21222c;
     color: #f8f8f2;
-    width: 250px; /* Fixed width */
-    border-right: 1px solid #3e3e54;
-    overflow-y: auto; /* Scrollable */
-    padding: 0.5rem;
-}
-
-/* Main Content (Editor + Terminal) */
-.playground-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* Occupies full remaining space */
     height: 100%;
-    background-color: #282a36;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border-right: 1px solid #3e3e54;
 }
 
 /* Editor Component */
 .editor-component {
-    flex: 1; /* Takes up the remaining space */
     position: relative;
     overflow: hidden;
     background-color: #282a36;
+    height: 100%;
 }
 
-/* Bottom Terminal */
+/* Terminal */
 .browser-terminal {
-    height: 25vh; /* Fixed height */
     background-color: #21222c;
     border-top: 1px solid #3e3e54;
     padding: 0.5rem;
     overflow: auto;
+    height: 100%;
 }
+
+/* Browser */
+.browser-container {
+    background-color: #1e1e2e;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    border-left: 1px solid #3e3e54;
+}
+
+.browser-container iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+/* Buttons and Inputs */
+.browser-container button {
+    margin-bottom: 0.5rem;
+    background-color: #282a36;
+    color: #f8f8f2;
+    border: 1px solid #44475a;
+    padding: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    cursor: pointer;
+}
+
+/* Button Styling */
+button {
+    background-color: #44475a;
+    color: #f8f8f2;
+    border: none;
+    padding: 8px 12px;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #6272a4; /* Lighter shade on hover */
+}
+
 /* Scrollbar General Styling */
 ::-webkit-scrollbar {
-    width: 8px; /* Vertical scrollbar width */
-    height: 8px; /* Horizontal scrollbar height */
+    width: 8px;
+    height: 8px;
 }
 
-/* Scrollbar Track */
 ::-webkit-scrollbar-track {
-    background: #2c2f38; /* Darker track background */
+    background: #2c2f38;
     border-radius: 10px;
 }
 
-/* Scrollbar Thumb */
 ::-webkit-scrollbar-thumb {
-    background: #44475a; /* Scrollbar thumb color */
+    background: #44475a;
     border-radius: 10px;
 }
 
-/* Scrollbar Thumb on Hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #6272a4; /* Slightly lighter shade on hover */
+    background: #6272a4;
 }
 
-/* Tree Structure (Sidebar) Scrollbar */
+/* Tree Structure Scrollbar */
 .tree-structure::-webkit-scrollbar {
     width: 8px;
 }
@@ -81,7 +115,7 @@
 
 /* Browser Terminal Scrollbar */
 .browser-terminal::-webkit-scrollbar {
-    height: 8px; /* Smaller scrollbar for the bottom terminal */
+    height: 8px;
 }
 
 .browser-terminal::-webkit-scrollbar-thumb {
@@ -93,3 +127,20 @@
     background: #50fa7b;
 }
 
+/* Browser Input */
+.browser-container input {
+    width: 100%;
+    height: 30px;
+    color: #f8f8f2;
+    font-family: 'Fira Code', monospace;
+    background-color: #282a36;
+    border: 1px solid #3e3e54;
+    border-radius: 4px;
+    padding-left: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.browser-container input:focus {
+    outline: none;
+    border-color: #6272a4;
+}
