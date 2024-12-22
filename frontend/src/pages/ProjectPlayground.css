@@ -20,38 +20,31 @@
 /* Editor Component */
 .editor-component {
     position: relative;
-    overflow: hidden;
     background-color: #282a36;
     height: 100%;
+    overflow: hidden;
 }
 
 /* Terminal */
 .browser-terminal {
     background-color: #21222c;
-    border-top: 1px solid #3e3e54;
+    color: #f8f8f2;
     padding: 0.5rem;
-    overflow: auto;
     height: 100%;
+    overflow-y: auto; /* Enables scrolling when content overflows */
+    border-top: 1px solid #3e3e54;
 }
 
 /* Browser */
 .browser-container {
     background-color: #1e1e2e;
-    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     border-left: 1px solid #3e3e54;
-}
-
-.browser-container iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
     height: 100%;
 }
 
-/* Buttons and Inputs */
 .browser-container button {
     margin-bottom: 0.5rem;
     background-color: #282a36;
@@ -60,23 +53,33 @@
     padding: 0.5rem;
     font-family: 'Fira Code', monospace;
     cursor: pointer;
-}
-
-/* Button Styling */
-button {
-    background-color: #44475a;
-    color: #f8f8f2;
-    border: none;
-    padding: 8px 12px;
-    margin-bottom: 0.5rem;
-    border-radius: 4px;
-    font-family: 'Fira Code', monospace;
-    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #6272a4; /* Lighter shade on hover */
+.browser-container button:hover {
+    background-color: #6272a4;
+}
+
+.browser-container iframe {
+    flex-grow: 1;
+    border: none;
+    background-color: #1e1e2e;
+}
+
+.browser-container input {
+    width: 100%;
+    height: 30px;
+    color: white;
+    background-color: #282a36;
+    border: 1px solid #3e3e54;
+    border-radius: 4px;
+    padding: 5px;
+    font-family: 'Fira Code', monospace;
+}
+
+.browser-container input:focus {
+    outline: none;
+    border-color: #6272a4;
 }
 
 /* Scrollbar General Styling */

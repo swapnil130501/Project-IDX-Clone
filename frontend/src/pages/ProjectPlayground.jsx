@@ -22,19 +22,22 @@ function ProjectPlayground() {
     useEffect(() => {
         if (projectIdFromUrl) {
             setProjectId(projectIdFromUrl);
+
+            // Initialize editor socket
             const editorSocketConnection = io(`${import.meta.env.VITE_BACKEND_URL}/editor`, {
                 query: { projectId: projectIdFromUrl },
             });
+            setEditorSocket(editorSocketConnection);
 
+            // Initialize terminal socket
             try {
                 const ws = new WebSocket(
                     "ws://localhost:4000/terminal?projectId=" + projectIdFromUrl
                 );
                 setTerminalSocket(ws);
             } catch (error) {
-                console.log("error in ws", error);
+                console.log("Error initializing WebSocket:", error);
             }
-            setEditorSocket(editorSocketConnection);
         }
     }, [projectIdFromUrl, setProjectId, setEditorSocket, setTerminalSocket]);
 
@@ -51,36 +54,33 @@ function ProjectPlayground() {
                 </Allotment.Pane>
 
                 {/* Main Content */}
-                <Allotment>
-                    {/* Editor and Browser Split */}
-                    <Allotment.Pane>
-                        <Allotment vertical>
-                            {/* Editor */}
-                            <Allotment.Pane preferredSize="75%">
-                                <div className="editor-component">
-                                    <EditorComponent />
-                                </div>
-                            </Allotment.Pane>
+                <Allotment.Pane>
+                    <Allotment vertical>
+                        {/* Editor */}
+                        <Allotment.Pane preferredSize="70%" minSize={300}>
+                            <div className="editor-component">
+                                <EditorComponent />
+                            </div>
+                        </Allotment.Pane>
 
-                            {/* Terminal */}
-                           
-                        </Allotment>
-                    </Allotment.Pane>
-                    
-                    <div className="browser-terminal">
-                        <BrowserTerminal />
+                        {/* Terminal */}
+                        <Allotment.Pane preferredSize="30%" minSize={200}>
+                            <div className="browser-terminal">
+                                <BrowserTerminal />
+                            </div>
+                        </Allotment.Pane>
+                    </Allotment>
+                </Allotment.Pane>
+
+                {/* Browser */}
+                <Allotment.Pane preferredSize={300} minSize={250}>
+                    <div className="browser-container">
+                        <button onClick={() => setLoadBrowser(true)}>Load my browser</button>
+                        {loadBrowser && projectIdFromUrl && terminalSocket && (
+                            <Browser projectId={projectIdFromUrl} />
+                        )}
                     </div>
-
-                    {/* Browser */}
-                    <Allotment.Pane preferredSize="25%" minSize={200}>
-                        <div className="browser-container">
-                            <button onClick={() => setLoadBrowser(true)}>Load my browser</button>
-                            {loadBrowser && projectIdFromUrl && terminalSocket && (
-                                <Browser projectId={projectIdFromUrl} />
-                            )}
-                        </div>
-                    </Allotment.Pane>
-                </Allotment>
+                </Allotment.Pane>
             </Allotment>
         </div>
     );
