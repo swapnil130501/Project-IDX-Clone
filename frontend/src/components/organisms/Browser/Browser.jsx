@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Input, Row } from "antd";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { usePortStore } from "../../../store/portStore";
+import { ReloadOutlined } from "@ant-design/icons";
 
 export const Browser = ({ projectId }) => {
 
