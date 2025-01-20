@@ -16,7 +16,8 @@ A VSCode-inspired Integrated Development Environment (IDE) clone, designed with 
 - **Frontend**: React, Tailwind CSS
 - **Backend**: Node.js, Express.js
 - **Terminal Integration**: xterm.js
-- **Real-Time Communication**: Socket.IO, WebSocket
+- Utilized **WebSocket** technology via **Socket.IO** to establish real-time bidirectional communication between the client and server.
+- For more details on implementing real-time communication, refer to [this guide](https://medium.com/@mosesmawuru/real-time-chat-application-node-js-socket-io-48756a84a53c).
 - **Containerization**: Docker
 - **UI Layout**: Allotment library
 
