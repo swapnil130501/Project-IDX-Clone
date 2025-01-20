@@ -1,6 +1,6 @@
 # Project IDX Clone
 
-A VSCode-inspired Integrated Development Environment (IDE) clone, designed with a focus on usability and seamless workflow. This project integrates a code editor, terminal, and browser-like functionality in a single interface, providing an immersive development experience.
+A Code Sandbox that integrates a code editor, terminal, and browser-like functionality in a single interface.
 
 ## Features
 
@@ -16,8 +16,7 @@ A VSCode-inspired Integrated Development Environment (IDE) clone, designed with 
 - **Frontend**: React, Tailwind CSS
 - **Backend**: Node.js, Express.js
 - **Terminal Integration**: xterm.js
-- Utilized **WebSocket** technology via **Socket.IO** to establish real-time bidirectional communication between the client and server.
-- For more details on implementing real-time communication, refer to [this guide](https://medium.com/@mosesmawuru/real-time-chat-application-node-js-socket-io-48756a84a53c).
+- Utilized **WebSocket** technology via **Socket.IO** to establish real-time bidirectional communication between the client and server. For more details on implementing real-time communication, refer to [this guide](https://medium.com/@mosesmawuru/real-time-chat-application-node-js-socket-io-48756a84a53c).
 - **Containerization**: Docker
 - **UI Layout**: Allotment library
 
