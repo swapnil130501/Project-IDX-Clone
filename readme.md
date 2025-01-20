@@ -45,31 +45,7 @@ A VSCode-inspired Integrated Development Environment (IDE) clone, designed with 
    docker-compose up --build
    ```
 
-## Usage
-
-- Navigate through the file structure in the sidebar.
-- Use the code editor to write and edit files.
-- Execute commands in the terminal with real-time feedback.
-- Experience a responsive and dynamic IDE-like interface.
-
-## Folder Structure
-
-```
-Project-IDX-Clone/
-├── public/          # Static assets
-├── src/             # Source code
-│   ├── components/  # React components
-│   ├── context/     # Context API for state management
-│   ├── styles/      # Tailwind CSS styles
-│   ├── utils/       # Utility functions
-│   └── App.js       # Main application entry point
-├── server/          # Node.js and Express backend
-├── Dockerfile       # Docker configuration
-├── docker-compose.yml
-└── package.json     # Project metadata and dependencies
-```
-
-## Future Enhancements
+## V2
 
 - Add support for syntax highlighting in the code editor.
 - Implement file upload and download capabilities.
