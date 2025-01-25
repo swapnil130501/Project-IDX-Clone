@@ -20,10 +20,7 @@ function CreateProject() {
 
     return (
         <div className="welcome-container">
-            {/* Background Image */}
             <img className="bg-image" src="src/assets/bg-image.png" alt="Background" />
-
-            {/* Content Section */}
             <div className="content">
                 <h1 className="title">Welcome to Project IDX</h1>
                 <p className="description">
@@ -34,11 +31,6 @@ function CreateProject() {
                 </p>
                 <button className="btn" onClick={handleCreateProject}>Get Started →</button>
             </div>
-
-            {/* Footer */}
-            <footer className="footer">
-                <p>© 2025 Project IDX. All rights reserved.</p>
-            </footer>
         </div>
     );
 }
