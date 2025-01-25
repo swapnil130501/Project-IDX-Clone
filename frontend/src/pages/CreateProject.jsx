@@ -1,13 +1,10 @@
 import React from 'react';
 import useCreateProject from '../hooks/apis/mutations/useCreateProject';
-import { Button, Layout, Card } from 'antd';
-import './CreateProject.css';
 import { useNavigate } from 'react-router-dom';
+import './CreateProject.css';
 
 function CreateProject() {
     const { createProjectMutation } = useCreateProject();
-    const { Header, Footer, Content } = Layout;
-
     const navigate = useNavigate();
 
     async function handleCreateProject() {
@@ -22,16 +19,27 @@ function CreateProject() {
     }
 
     return (
-        <Layout className="layout">
-            <Card className="card">
-                <div className="header">Create a New React Project</div>
-                <Content className="content">
-                    Start your development journey with our powerful, streamlined tools.
-                </Content>
-                <Button onClick={handleCreateProject}>Create Playground</Button>
-                <Footer className="footer">© 2024 My React App. All rights reserved.</Footer>
-            </Card>
-        </Layout>
+        <div className="welcome-container">
+            {/* Background Image */}
+            <img className="bg-image" src="src/assets/bg-image.png" alt="Background" />
+
+            {/* Content Section */}
+            <div className="content">
+                <h1 className="title">Welcome to Project IDX</h1>
+                <p className="description">
+                    Project IDX is a workspace for full-stack, multiplatform app development in the cloud.
+                    With support for a broad range of frameworks, languages, and services, alongside
+                    integrations with your favorite Google products, IDX streamlines your development
+                    workflow so you can build and ship apps across platforms with speed, ease, and quality.
+                </p>
+                <button className="btn" onClick={handleCreateProject}>Get Started →</button>
+            </div>
+
+            {/* Footer */}
+            <footer className="footer">
+                <p>© 2025 Project IDX. All rights reserved.</p>
+            </footer>
+        </div>
     );
 }
 
