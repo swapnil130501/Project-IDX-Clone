@@ -7,6 +7,7 @@ import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore
 import { CreateFileModal } from "../CreateInputModal/CreateFileFolderModal";
 import { useCreateFileStore } from "../../../store/createFileFolderStore";
 import { useExpandTreeStore } from "../../../store/expandTreeStore";
+import "./Tree.css";
 
 function Tree({ data }) {
     const { editorSocket } = useEditorSocketStore();
@@ -53,47 +54,19 @@ function Tree({ data }) {
 
     return (
         data && (
-            <div
-                style={{
-                    paddingLeft: "15px",
-                    backgroundColor: "#21222C",
-                    color: "#f8f8f2",
-                    fontSize: "13px",
-                    fontFamily: "monospace",
-                    lineHeight: "1.5",
-                }}
-            >
+            <div className="tree-node">
                 {data.children ? (
                     <div>
                         <button
+                            className={`tree-folder-button${expand[data.name] ? ' expanded' : ''}`}
                             onClick={() => handleExpand(data.name)}
-                            style={{
-                                border: "none",
-                                cursor: "pointer",
-                                outline: "none",
-                                backgroundColor: "transparent",
-                                padding: "10px",
-                                marginTop: "5px",
-                                fontSize: "17px",
-                                fontFamily: "monospace",
-                                color: expand[data.name] ? "#ff79c6" : "#bd93f9",
-                                display: "flex",
-                                alignItems: "center",
-                                lineHeight: "1.5",
-                            }}
                             onContextMenu={(e) => handleContextMenuForFolder(e, data.path)}
                         >
-                            <span
-                                style={{
-                                    marginRight: "5px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
+                            <span className="tree-folder-icon">
                                 {expand[data.name] ? (
-                                    <IoIosArrowDown style={{ color: "#50fa7b", fontSize: "14px" }} />
+                                    <IoIosArrowDown className="tree-icon-expanded" />
                                 ) : (
-                                    <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} />
+                                    <IoIosArrowForward className="tree-icon-collapsed" />
                                 )}
                             </span>
                             {data.name}
@@ -107,35 +80,14 @@ function Tree({ data }) {
                     </div>
                 ) : (
                     <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            cursor: "pointer",
-                            marginTop: "5px",
-                            padding: "5px 0",
-                        }}
+                        className="tree-file-row"
                         onClick={() => handleClick(data)}
                         onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
                     >
-                        <span
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginRight: "5px",
-                            }}
-                        >
+                        <span className="tree-file-icon">
                             <FileIcon extension={computeExtension(data)} />
                         </span>
-                        <span
-                            style={{
-                                fontSize: "15px",
-                                fontFamily: "monospace",
-                                lineHeight: "1.5",
-                                color: "#f8f8f2",
-                            }}
-                        >
-                            {data.name}
-                        </span>
+                        <span className="tree-file-name">{data.name}</span>
                     </div>
                 )}
 
