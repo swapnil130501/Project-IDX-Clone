@@ -1,0 +1,36 @@
+/* frontend/src/components/organisms/Browser/Browser.css */
+.browser-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.browser-pane {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--bg-base);
+}
+
+.browser-address-bar {
+    height: 30px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-2);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.browser-frame {
+    flex: 1;
+    border: none;
+    background-color: var(--bg-base);
+}
