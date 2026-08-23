@@ -44,10 +44,10 @@ export const EditorComponent = () => {
         downloadTheme();
     }, []);
     return (
-        <>
+        <div style={{ flex: 1, minHeight: 0 }}>
             {editorState.theme &&
-                <Editor 
-                    height={'100vh'}
+                <Editor
+                    height={'100%'}
                     width={'100%'}
                     defaultLanguage={undefined}
                     defaultValue='// Welcome to the playground'
@@ -60,6 +60,6 @@ export const EditorComponent = () => {
                     onMount={handleEditorTheme}
                 />
             }
-        </>
+        </div>
     )
 }
