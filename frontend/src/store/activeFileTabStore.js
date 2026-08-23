@@ -18,6 +18,23 @@ export const useActiveFileTabStore = create((set, get) => ({
         });
     },
 
+    upsertTabContent: (path, value, extension) => {
+        const name = path.split('/').pop();
+        const tab = { path, name, extension, value };
+
+        set((state) => {
+            const existingIndex = state.openTabs.findIndex((t) => t.path === path);
+            if (existingIndex === -1) {
+                return state;
+            }
+
+            const openTabs = state.openTabs.map((t, i) => (i === existingIndex ? tab : t));
+            const activeFileTab = state.activeFileTab?.path === path ? tab : state.activeFileTab;
+
+            return { openTabs, activeFileTab };
+        });
+    },
+
     activateTab: (path) => {
         const tab = get().openTabs.find((t) => t.path === path);
         if (tab) {

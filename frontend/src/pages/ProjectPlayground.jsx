@@ -9,6 +9,8 @@ import { useTreeStructureStore } from "../store/treeStructureStore";
 import { useEditorSocketStore } from "../store/editorSocketStore";
 import { useTerminalSocketStore } from "../store/terminalSocketStore";
 import { usePreviewReloadStore } from "../store/previewReloadStore";
+import { usePortStore } from "../store/portStore";
+import { useActiveFileTabStore } from "../store/activeFileTabStore";
 import io from "socket.io-client";
 import "./ProjectPlayground.css";
 import { Browser } from "../components/organisms/Browser/Browser";
@@ -24,6 +26,8 @@ function ProjectPlayground() {
 
     useEffect(() => {
         if (projectIdFromUrl) {
+            usePortStore.setState({ port: null });
+            useActiveFileTabStore.setState({ activeFileTab: null, openTabs: [] });
             setProjectId(projectIdFromUrl);
 
             const editorSocketConnection = io(`${import.meta.env.VITE_BACKEND_URL}/editor`, {

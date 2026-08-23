@@ -8,17 +8,25 @@ export const useEditorSocketStore = create((set) => ({
     setEditorSocket: (incomingSocket) => {
 
         const activeFileTabSetter = useActiveFileTabStore.getState().setActiveFileTab;
+        const upsertTabContentSetter = useActiveFileTabStore.getState().upsertTabContent;
         const projectTreeStructureSetter = useTreeStructureStore.getState().setTreeStructure;
-        const portSetter = usePortStore.getState().setPort;  
-        
+        const portSetter = usePortStore.getState().setPort;
+        const pendingSilentRefreshes = new Set();
+
         incomingSocket?.on('readFileSuccess', (data) => {
             console.log('read file success', data);
             const fileExtension = data.path.split('.').pop();
-            activeFileTabSetter(data.path, data.value, fileExtension);
+            if (pendingSilentRefreshes.has(data.path)) {
+                pendingSilentRefreshes.delete(data.path);
+                upsertTabContentSetter(data.path, data.value, fileExtension);
+            } else {
+                activeFileTabSetter(data.path, data.value, fileExtension);
+            }
         });
 
         incomingSocket?.on('writeFileSuccess', (data) => {
             console.log('writeFileSucess', data);
+            pendingSilentRefreshes.add(data.path);
             incomingSocket?.emit('readFile', {
                 pathToFileOrFolder: data.path
             })
