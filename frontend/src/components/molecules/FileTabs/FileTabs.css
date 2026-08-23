@@ -1,0 +1,7 @@
+.file-tabs {
+    display: flex;
+    flex-shrink: 0;
+    background-color: var(--bg-base);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow-x: auto;
+}

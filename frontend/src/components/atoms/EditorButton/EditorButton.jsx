@@ -1,25 +1,28 @@
-import React from 'react'
-import './EditorButton.css'
+import PropTypes from 'prop-types';
+import './EditorButton.css';
 
-function EditorButton({ isActive }) {
-
-    function handleClick() {
-        console.log('clicked');
+function EditorButton({ label, isActive, onClick, onClose }) {
+    function handleClose(e) {
+        e.stopPropagation();
+        onClose();
     }
 
     return (
-        <button 
-            className='editor-button'
-            style={{
-                color: isActive ? 'white' : "#959eba",
-                backgroundColor: isActive ? '#303242': '#4a4859',
-                borderTop: isActive ? 'border-top: 2px solid #f7b9dd' : 'none'
-            }}
-            onClick={handleClick}
+        <button
+            className={`editor-button${isActive ? ' editor-button-active' : ''}`}
+            onClick={onClick}
         >
-            file.js
+            <span className="editor-button-label">{label}</span>
+            <span className="editor-button-close" onClick={handleClose}>×</span>
         </button>
-    )
+    );
 }
 
-export default EditorButton
+EditorButton.propTypes = {
+    label: PropTypes.string.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+};
+
+export default EditorButton;

@@ -1,11 +1,32 @@
 .editor-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     outline: none;
-    background-color: #303242;
-    font-size: 14px;
-    height: 30px;
-    border-left: none;
-    border-bottom: none;
-    border-top: 2px solid #f7b9dd;
-    color: white;
-    padding: 3px 7px 3px 7px;
+    background-color: var(--bg-base);
+    border: none;
+    border-right: 1px solid var(--border-subtle);
+    border-top: 2px solid transparent;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    height: 34px;
+    color: var(--text-secondary);
+    padding: 0 var(--space-3);
+    cursor: pointer;
+}
+
+.editor-button-active {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-top: 2px solid var(--accent);
+}
+
+.editor-button-close {
+    color: var(--text-muted);
+    padding: 0 2px;
+    line-height: 1;
+}
+
+.editor-button-close:hover {
+    color: var(--text-primary);
 }
