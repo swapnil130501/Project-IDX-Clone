@@ -1,0 +1,25 @@
+:root {
+  --bg-base: #181818;
+  --bg-surface: #1e1e1e;
+  --bg-elevated: #2a2a2a;
+  --border-subtle: #2a2a2a;
+
+  --text-primary: #e6e6e6;
+  --text-secondary: #9a9a9a;
+  --text-muted: #7a7a7a;
+
+  --accent: #3b82f6;
+  --accent-hover: #5b9bf5;
+  --success: #3fb950;
+  --danger: #f85149;
+
+  --font-mono: 'Fira Code', ui-monospace, monospace;
+  --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+
+  --radius: 6px;
+}
