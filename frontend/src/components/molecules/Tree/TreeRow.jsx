@@ -22,19 +22,15 @@ function TreeRow({
             type="button"
             onClick={onClick}
             onContextMenu={onContextMenu}
-            whileHover={
-                reduceMotion ? undefined : { backgroundColor: 'rgba(255,255,255,0.045)' }
-            }
             whileTap={reduceMotion ? undefined : { scale: 0.995 }}
             transition={{ duration: 0.12 }}
             style={{
                 paddingLeft: `${6 + depth * 14}px`,
-                backgroundColor: 'rgba(255,255,255,0)',
                 border: 'none',
             }}
             className={`${ROW} ${
                 isFolder && isExpanded ? 'text-ink' : 'text-ink-dim'
-            } hover:text-ink`}
+            } hover:bg-hover hover:text-ink`}
         >
             {isFolder ? (
                 <motion.span
