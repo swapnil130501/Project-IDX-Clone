@@ -22,7 +22,9 @@ function TreeRow({
             type="button"
             onClick={onClick}
             onContextMenu={onContextMenu}
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.045)' }}
+            whileHover={
+                reduceMotion ? undefined : { backgroundColor: 'rgba(255,255,255,0.045)' }
+            }
             whileTap={reduceMotion ? undefined : { scale: 0.995 }}
             transition={{ duration: 0.12 }}
             style={{

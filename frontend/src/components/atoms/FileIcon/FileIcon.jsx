@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { FaCss3, FaHtml5, FaJs, FaFileAlt } from "react-icons/fa";
 import { GrReactjs } from "react-icons/gr";
 
@@ -25,4 +26,9 @@ export const FileIcon = ({ extension, compact = false }) => {
             )}
         </span>
     );
+};
+
+FileIcon.propTypes = {
+    extension: PropTypes.string,
+    compact: PropTypes.bool,
 };
