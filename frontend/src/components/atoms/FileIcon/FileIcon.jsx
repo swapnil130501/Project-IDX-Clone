@@ -1,19 +1,19 @@
 import { FaCss3, FaHtml5, FaJs, FaFileAlt } from "react-icons/fa";
 import { GrReactjs } from "react-icons/gr";
 
-export const FileIcon = ({ extension }) => {
+export const FileIcon = ({ extension, compact = false }) => {
     const iconStyle = {
-        height: "16px",
-        width: "16px",
-        marginRight: "5px", 
-        marginLeft: '10px',
+        height: compact ? "14px" : "16px",
+        width: compact ? "14px" : "16px",
+        marginRight: compact ? "0" : "5px",
+        marginLeft: compact ? "0" : "10px",
         display: "flex",
         alignItems: "center",
     };
 
     const IconMapper = {
         js: <FaJs color="#f1fa8c" style={iconStyle} />,
-        jsx: <GrReactjs color="#61dbfa" style={iconStyle} />, 
+        jsx: <GrReactjs color="#61dbfa" style={iconStyle} />,
         css: <FaCss3 color="#8be9fd" style={iconStyle} />,
         html: <FaHtml5 color="#ff5555" style={iconStyle} />,
     };

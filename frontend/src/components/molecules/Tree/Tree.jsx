@@ -1,102 +1,110 @@
-import React from "react";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { FileIcon } from "../../atoms/FileIcon/FileIcon";
+import PropTypes from "prop-types";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { useFileContextMenuStore } from "../../../store/fileContextMenuStore";
 import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore";
 import { CreateFileModal } from "../CreateInputModal/CreateFileFolderModal";
 import { useCreateFileStore } from "../../../store/createFileFolderStore";
 import { useExpandTreeStore } from "../../../store/expandTreeStore";
-import "./Tree.css";
+import TreeRow from "./TreeRow";
 
-function Tree({ data }) {
+function Tree({ data, depth = 0 }) {
     const { editorSocket } = useEditorSocketStore();
-    const { setIsOpen: setFileContextMenuIsOpen, setX: setFileContextMenuX, setY: setFileContextMenuY, setFile } = useFileContextMenuStore();
-    const { setX: setFolderContextMenuX, setY: setFolderContextMenuY, setIsOpen: setFolderContextMenuIsOpen, setFolder } = useFolderContextMenuStore();
+    const {
+        setIsOpen: setFileContextMenuIsOpen,
+        setX: setFileContextMenuX,
+        setY: setFileContextMenuY,
+        setFile,
+    } = useFileContextMenuStore();
+    const {
+        setX: setFolderContextMenuX,
+        setY: setFolderContextMenuY,
+        setIsOpen: setFolderContextMenuIsOpen,
+        setFolder,
+    } = useFolderContextMenuStore();
     const { isModalOpen, folderPath, isFolderCreation } = useCreateFileStore();
+    const { expand, toggleExpand } = useExpandTreeStore();
+    const reduceMotion = useReducedMotion();
 
-    const { expand, toggleExpand, setExpanded } = useExpandTreeStore();
-
-    function handleExpand(name) {
-        toggleExpand(name);
+    if (!data) {
+        return null;
     }
 
-    function computeExtension(data) {
-        const names = data.name.split(".");
+    const isFolder = Boolean(data.children);
+    const isExpanded = Boolean(expand[data.name]);
+
+    function computeExtension(node) {
+        const names = node.name.split(".");
         return names.length > 1 ? names[names.length - 1] : null;
     }
 
-    function handleClick(data) {
-        editorSocket.emit("readFile", {
-            pathToFileOrFolder: data.path,
-        });
-
-        console.log("clicked");
+    function handleClick() {
+        if (isFolder) {
+            toggleExpand(data.name);
+            return;
+        }
+        editorSocket.emit("readFile", { pathToFileOrFolder: data.path });
     }
 
-    function handleContextMenuForFile(e, path) {
+    function handleContextMenu(e) {
         e.preventDefault();
-        console.log("right click on file", path);
-        setFile(path);
+        if (isFolder) {
+            setFolder(data.path);
+            setFolderContextMenuX(e.clientX);
+            setFolderContextMenuY(e.clientY);
+            setFolderContextMenuIsOpen(true);
+            return;
+        }
+        setFile(data.path);
         setFileContextMenuX(e.clientX);
         setFileContextMenuY(e.clientY);
         setFileContextMenuIsOpen(true);
     }
 
-    function handleContextMenuForFolder(e, path) {
-        e.preventDefault();
-        console.log("right click on folder", path);
-        setFolder(path);
-        setFolderContextMenuX(e.clientX);
-        setFolderContextMenuY(e.clientY);
-        setFolderContextMenuIsOpen(true);
-    }
-
     return (
-        data && (
-            <div className="tree-node">
-                {data.children ? (
-                    <div>
-                        <button
-                            className={`tree-folder-button${expand[data.name] ? ' expanded' : ''}`}
-                            onClick={() => handleExpand(data.name)}
-                            onContextMenu={(e) => handleContextMenuForFolder(e, data.path)}
-                        >
-                            <span className="tree-folder-icon">
-                                {expand[data.name] ? (
-                                    <IoIosArrowDown className="tree-icon-expanded" />
-                                ) : (
-                                    <IoIosArrowForward className="tree-icon-collapsed" />
-                                )}
-                            </span>
-                            {data.name}
-                        </button>
+        <div className="w-full">
+            <TreeRow
+                depth={depth}
+                isFolder={isFolder}
+                isExpanded={isExpanded}
+                name={data.name}
+                extension={isFolder ? undefined : computeExtension(data)}
+                onClick={handleClick}
+                onContextMenu={handleContextMenu}
+            />
 
-                        {isModalOpen && folderPath === data.path && (
-                            <div>
-                                <CreateFileModal isFolderCreation={isFolderCreation} />
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div
-                        className="tree-file-row"
-                        onClick={() => handleClick(data)}
-                        onContextMenu={(e) => handleContextMenuForFile(e, data.path)}
+            {isFolder && isModalOpen && folderPath === data.path && (
+                <div style={{ paddingLeft: `${6 + (depth + 1) * 14}px` }}>
+                    <CreateFileModal isFolderCreation={isFolderCreation} />
+                </div>
+            )}
+
+            <AnimatePresence initial={false}>
+                {isFolder && isExpanded && data.children?.length > 0 && (
+                    <motion.div
+                        key="children"
+                        initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{
+                            duration: reduceMotion ? 0 : 0.2,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="overflow-hidden"
                     >
-                        <span className="tree-file-icon">
-                            <FileIcon extension={computeExtension(data)} />
-                        </span>
-                        <span className="tree-file-name">{data.name}</span>
-                    </div>
+                        {data.children.map((child) => (
+                            <Tree data={child} depth={depth + 1} key={child.name} />
+                        ))}
+                    </motion.div>
                 )}
-
-                {expand[data.name] &&
-                    data.children?.length > 0 &&
-                    data.children.map((it) => <Tree data={it} key={it.name} />)}
-            </div>
-        )
+            </AnimatePresence>
+        </div>
     );
 }
+
+Tree.propTypes = {
+    data: PropTypes.object,
+    depth: PropTypes.number,
+};
 
 export default Tree;
