@@ -54,7 +54,7 @@ function ProjectPlayground() {
                     {/* Left Sidebar */}
                     <Allotment.Pane preferredSize={250} minSize={200} maxSize={400}>
                         {projectId && (
-                            <div className="tree-structure">
+                            <div className="h-full overflow-y-auto border-r border-line bg-base px-1.5 py-2 text-ink">
                                 <TreeStructure />
                             </div>
                         )}
@@ -65,7 +65,7 @@ function ProjectPlayground() {
                         <Allotment vertical>
                             {/* Editor */}
                             <Allotment.Pane preferredSize="70%" minSize={300}>
-                                <div className="editor-component">
+                                <div className="relative flex h-full flex-col overflow-hidden border-l border-line bg-surface">
                                     <FileTabs />
                                     <EditorComponent />
                                 </div>
