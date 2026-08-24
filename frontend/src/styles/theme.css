@@ -1,0 +1,30 @@
+/* Tailwind v4, CSS-first. Preflight is deliberately NOT imported:
+   out-of-scope components rely on browser default element styling plus
+   their own plain CSS, and Preflight would silently restyle them. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --color-base: #181818;
+  --color-surface: #1e1e1e;
+  --color-elevated: #2a2a2a;
+  --color-line: #2a2a2a;
+  --color-line-strong: #3a3a3d;
+
+  --color-ink: #e6e6e6;
+  --color-ink-dim: #9a9a9a;
+  --color-ink-faint: #7a7a7a;
+
+  --color-accent: #3b82f6;
+  --color-accent-hover: #5b9bf5;
+
+  --color-hover: rgba(255, 255, 255, 0.045);
+  --color-grid: rgba(255, 255, 255, 0.035);
+  --color-grid-major: rgba(255, 255, 255, 0.06);
+
+  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Fira Code", ui-monospace, monospace;
+
+  --radius-chip: 6px;
+  --radius-card: 10px;
+}
