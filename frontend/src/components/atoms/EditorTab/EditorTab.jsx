@@ -40,8 +40,9 @@ function EditorTab({ label, isActive, onClick, onClose }) {
                     type="button"
                     aria-label={`Close ${label}`}
                     onClick={handleClose}
-                    className="flex h-4 w-4 items-center justify-center rounded-chip border-none bg-transparent text-[13px] leading-none text-ink-faint opacity-0 transition-opacity duration-150 hover:bg-elevated hover:text-ink focus-visible:opacity-100 group-hover:opacity-100 aria-[current]:opacity-100"
-                    style={isActive ? { opacity: 1 } : undefined}
+                    className={`flex h-4 w-4 items-center justify-center rounded-chip border-none bg-transparent text-[13px] leading-none text-ink-faint transition-opacity duration-150 hover:bg-elevated hover:text-ink focus-visible:opacity-100 ${
+                        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
                 >
                     ×
                 </button>
