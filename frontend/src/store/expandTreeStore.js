@@ -1,20 +1,20 @@
 import { create } from 'zustand';
 
 export const useExpandTreeStore = create((set) => ({
-    expand: {}, 
-    toggleExpand: (name) =>
+    expand: {},
+    toggleExpand: (path) =>
         set((state) => ({
             expand: {
                 ...state.expand,
-                [name]: !state.expand[name],
+                [path]: !state.expand[path],
             },
         })),
 
-    setExpanded: (name, isExpanded = true) =>
+    setExpanded: (path, isExpanded = true) =>
         set((state) => ({
             expand: {
                 ...state.expand,
-                [name]: isExpanded,
+                [path]: isExpanded,
             },
         })),
 }));

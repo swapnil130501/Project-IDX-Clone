@@ -29,7 +29,7 @@ describe('Tree', () => {
   })
 
   it('emits readFile when a file row is clicked', async () => {
-    useExpandTreeStore.setState({ expand: { src: true } })
+    useExpandTreeStore.setState({ expand: { '/src': true } })
     render(<Tree data={DATA} />)
 
     await userEvent.click(screen.getByText('App.jsx'))

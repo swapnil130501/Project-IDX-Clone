@@ -4,12 +4,13 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { FileIcon } from '../../atoms/FileIcon/FileIcon';
 
 const ROW =
-    'group flex w-full items-center gap-1.5 h-6 rounded-chip pr-2 cursor-pointer select-none text-left font-mono text-[13px] leading-none outline-none focus-visible:ring-1 focus-visible:ring-accent';
+    'group flex w-full items-center gap-1.5 h-6 rounded-chip bg-transparent pr-2 cursor-pointer select-none text-left font-mono text-[13px] leading-none outline-none focus-visible:ring-1 focus-visible:ring-accent';
 
 function TreeRow({
     depth,
     isFolder,
     isExpanded,
+    isActive,
     name,
     extension,
     onClick,
@@ -22,6 +23,7 @@ function TreeRow({
             type="button"
             onClick={onClick}
             onContextMenu={onContextMenu}
+            aria-current={isActive ? 'true' : undefined}
             whileTap={reduceMotion ? undefined : { scale: 0.995 }}
             transition={{ duration: 0.12 }}
             style={{
@@ -29,7 +31,11 @@ function TreeRow({
                 border: 'none',
             }}
             className={`${ROW} ${
-                isFolder && isExpanded ? 'text-ink' : 'text-ink-dim'
+                isActive
+                    ? 'bg-accent/10 text-ink'
+                    : isFolder && isExpanded
+                        ? 'text-ink'
+                        : 'text-ink-dim'
             } hover:bg-hover hover:text-ink`}
         >
             {isFolder ? (
@@ -47,7 +53,11 @@ function TreeRow({
                     <IoIosArrowForward size={13} />
                 </motion.span>
             ) : (
-                <span className="flex h-3.5 w-3.5 items-center justify-center">
+                <span
+                    className={`flex h-3.5 w-3.5 items-center justify-center ${
+                        isActive ? 'text-ink' : 'text-ink-faint group-hover:text-ink-dim'
+                    }`}
+                >
                     <FileIcon extension={extension} compact />
                 </span>
             )}
@@ -60,6 +70,7 @@ TreeRow.propTypes = {
     depth: PropTypes.number.isRequired,
     isFolder: PropTypes.bool.isRequired,
     isExpanded: PropTypes.bool,
+    isActive: PropTypes.bool,
     name: PropTypes.string.isRequired,
     extension: PropTypes.string,
     onClick: PropTypes.func.isRequired,

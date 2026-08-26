@@ -13,17 +13,15 @@ export const FileIcon = ({ extension, compact = false }) => {
     };
 
     const IconMapper = {
-        js: <FaJs color="#f1fa8c" style={iconStyle} />,
-        jsx: <GrReactjs color="#61dbfa" style={iconStyle} />,
-        css: <FaCss3 color="#8be9fd" style={iconStyle} />,
-        html: <FaHtml5 color="#ff5555" style={iconStyle} />,
+        js: <FaJs style={iconStyle} />,
+        jsx: <GrReactjs style={iconStyle} />,
+        css: <FaCss3 style={iconStyle} />,
+        html: <FaHtml5 style={iconStyle} />,
     };
 
     return (
         <span style={{ display: "flex", alignItems: "center" }}>
-            {IconMapper[extension] || (
-                <FaFileAlt color="#6272a4" style={iconStyle} />
-            )}
+            {IconMapper[extension] || <FaFileAlt style={iconStyle} />}
         </span>
     );
 };

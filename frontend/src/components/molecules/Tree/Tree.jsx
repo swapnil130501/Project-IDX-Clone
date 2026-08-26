@@ -6,6 +6,7 @@ import { useFolderContextMenuStore } from "../../../store/folderContextMenuStore
 import { CreateFileModal } from "../CreateInputModal/CreateFileFolderModal";
 import { useCreateFileStore } from "../../../store/createFileFolderStore";
 import { useExpandTreeStore } from "../../../store/expandTreeStore";
+import { useActiveFileTabStore } from "../../../store/activeFileTabStore";
 import TreeRow from "./TreeRow";
 
 function Tree({ data, depth = 0 }) {
@@ -24,6 +25,7 @@ function Tree({ data, depth = 0 }) {
     } = useFolderContextMenuStore();
     const { isModalOpen, folderPath, isFolderCreation } = useCreateFileStore();
     const { expand, toggleExpand } = useExpandTreeStore();
+    const { activeFileTab } = useActiveFileTabStore();
     const reduceMotion = useReducedMotion();
 
     if (!data) {
@@ -31,7 +33,8 @@ function Tree({ data, depth = 0 }) {
     }
 
     const isFolder = Boolean(data.children);
-    const isExpanded = Boolean(expand[data.name]);
+    const isExpanded = Boolean(expand[data.path]);
+    const isActive = !isFolder && activeFileTab?.path === data.path;
 
     function computeExtension(node) {
         const names = node.name.split(".");
@@ -40,7 +43,7 @@ function Tree({ data, depth = 0 }) {
 
     function handleClick() {
         if (isFolder) {
-            toggleExpand(data.name);
+            toggleExpand(data.path);
             return;
         }
         editorSocket.emit("readFile", { pathToFileOrFolder: data.path });
@@ -67,6 +70,7 @@ function Tree({ data, depth = 0 }) {
                 depth={depth}
                 isFolder={isFolder}
                 isExpanded={isExpanded}
+                isActive={isActive}
                 name={data.name}
                 extension={isFolder ? undefined : computeExtension(data)}
                 onClick={handleClick}
