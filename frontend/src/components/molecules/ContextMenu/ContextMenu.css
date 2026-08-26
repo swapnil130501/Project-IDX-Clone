@@ -1,26 +1,27 @@
 .contextOptionsWrapper {
-    width: 150px;
+    width: 160px;
     position: fixed;
-    background-color: #1e1e1e; 
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
-    border-radius: 5px; 
-    overflow: hidden; 
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    overflow: hidden;
     z-index: 1000;
+    font-family: var(--font-ui);
 }
 
 .contextButton {
-    color: white;
+    color: var(--text-primary);
     border: none;
     outline: none;
     width: 100%;
-    height: 35px;
+    height: 32px;
     cursor: pointer;
-    background-color: #252526;
-    padding: 0 10px; 
+    background-color: transparent;
+    padding: 0 var(--space-3);
     text-align: left;
-    font-size: 14px; 
+    font-size: 13px;
 }
 
 .contextButton:hover {
-    background-color: #3c3c3c; 
+    background-color: var(--bg-elevated);
 }

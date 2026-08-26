@@ -8,7 +8,7 @@ import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore
 
 function TreeStructure() {
 
-    const { treeStructure, setTreeStructure } = useTreeStructureStore();
+    const { treeStructure, treeStructureError, setTreeStructure } = useTreeStructureStore();
     const { isOpen: isFileContextMenuIsOpen, x: fileContextX, y: fileContextY, file} = useFileContextMenuStore();
     const { x: folderContextX, y: folderContextY, isOpen: isFolderContextMenuIsOpen, folder} = useFolderContextMenuStore();
     
@@ -36,7 +36,17 @@ function TreeStructure() {
                 />
             )}
         
-            <Tree data={treeStructure} />
+            {treeStructureError ? (
+                <p className="px-2 py-2 font-ui text-[13px] text-ink-faint">
+                    {treeStructureError}
+                </p>
+            ) : treeStructure ? (
+                <Tree data={treeStructure} />
+            ) : (
+                <p className="px-2 py-2 font-ui text-[13px] text-ink-faint">
+                    Loading files…
+                </p>
+            )}
         </>
     );
 }

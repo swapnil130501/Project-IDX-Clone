@@ -49,7 +49,15 @@ function ProjectPlayground() {
     return (
         <div className="project-playground">
             <Toolbar onReloadPreview={triggerReload} />
-            <div className="playground-body">
+            <div className="playground-narrow-notice flex min-[720px]:hidden flex-1 flex-col items-center justify-center gap-2 px-8 text-center">
+                <p className="font-ui text-[14px] font-semibold text-ink">
+                    Nimbus needs a wider screen
+                </p>
+                <p className="font-ui text-[13px] text-ink-dim">
+                    The workspace's file tree, editor, and preview panes need at least a laptop-sized display. Try again on a larger screen.
+                </p>
+            </div>
+            <div className="playground-body hidden min-[720px]:block">
                 <Allotment>
                     {/* Left Sidebar */}
                     <Allotment.Pane preferredSize={250} minSize={200} maxSize={400}>

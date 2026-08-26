@@ -15,9 +15,6 @@ export const CreateFileModal = ({ isFolderCreation = false }) => {
 
     function handleKeyDown(e) {
         if (e.key === "Enter" && inputValue) {
-            console.log(isFolderCreation ? "Creating new folder" : "Creating new file", inputValue);
-            console.log(folder);
-
             editorSocket.emit(isFolderCreation ? "createFolder" : "createFile", {
                 pathToFileOrFolder: `${folder}/${inputValue}`,
             });
@@ -25,9 +22,7 @@ export const CreateFileModal = ({ isFolderCreation = false }) => {
             setCreatedFileName(inputValue);
             setIsModalOpen(false);
             setInputValue("");
-            const parentFolderName = folder.split("\\").pop();
-            console.log("Parent Folder Name:", parentFolderName);
-            setExpanded(parentFolderName, true);
+            setExpanded(folder, true);
         } else if (e.key === "Escape") {
             handleClose();
         }
@@ -41,8 +36,16 @@ export const CreateFileModal = ({ isFolderCreation = false }) => {
     if (!isModalOpen) return null;
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginLeft: '25px', marginRight: '5px'}}>
-            {isFolderCreation ? <IoIosArrowForward style={{ color: "#ff79c6", fontSize: "14px" }} /> : <FileIcon extension={undefined} />}
+        <div className="flex w-full items-center gap-1.5 h-6 pr-2 font-mono text-[13px] leading-none text-ink">
+            {isFolderCreation ? (
+                <span className="flex h-3.5 w-3.5 items-center justify-center text-ink-faint">
+                    <IoIosArrowForward size={13} />
+                </span>
+            ) : (
+                <span className="flex h-3.5 w-3.5 items-center justify-center">
+                    <FileIcon extension={undefined} compact />
+                </span>
+            )}
             <input
                 type="text"
                 autoFocus
@@ -50,16 +53,7 @@ export const CreateFileModal = ({ isFolderCreation = false }) => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={`Enter ${isFolderCreation ? "folder" : "file"} name`}
-                style={{
-                    marginLeft: '5px',
-                    width: '100%',
-                    height: '25px',
-                    background: 'transparent',
-                    border: 'none',
-                    color: '#ffffff',
-                    outline: 'none',
-                    fontSize: '15px',
-                }}
+                className="w-full border-none bg-transparent font-mono text-[13px] leading-none text-ink outline-none placeholder:text-ink-faint"
             />
         </div>
     );

@@ -9,21 +9,28 @@ export const useTreeStructureStore = create((set, get) => {
     return {
         projectId: null,
         treeStructure: null,
+        treeStructureError: null,
 
         setTreeStructure: async () => {
             const id = get().projectId;
-            const data = await queryClient.fetchQuery({
-                queryKey: [`projecttree-${id}`],
-                queryFn: () => getProjectTree({ projectId: id }),
-            });
+            try {
+                const data = await queryClient.fetchQuery({
+                    queryKey: [`projecttree-${id}`],
+                    queryFn: () => getProjectTree({ projectId: id }),
+                });
 
-            console.log(data);
-
-            set({
-                treeStructure: data
-            });
+                set({
+                    treeStructure: data,
+                    treeStructureError: null,
+                });
+            } catch {
+                set({
+                    treeStructure: null,
+                    treeStructureError: 'Couldn\'t load the file tree.',
+                });
+            }
         },
-        
+
         setProjectId: (projectId) => {
             set({
                 projectId: projectId

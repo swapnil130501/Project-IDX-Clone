@@ -1,9 +1,17 @@
+@layer reset, theme, utilities;
+
 @import './styles/tokens.css';
 @import './styles/theme.css';
 
-* {
-    margin: 0;
-    padding: 0;
+/* Layered so Tailwind's utilities layer (imported above) always wins the
+   cascade. An unlayered rule here would otherwise beat every Tailwind
+   spacing utility regardless of specificity, since unlayered CSS outranks
+   all @layer content. */
+@layer reset {
+    * {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 body {

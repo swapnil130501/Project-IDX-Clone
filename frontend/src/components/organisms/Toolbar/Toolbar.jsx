@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { VscRefresh } from 'react-icons/vsc';
 import { usePortStore } from '../../../store/portStore';
+import NimbusMark from '../../atoms/NimbusMark/NimbusMark';
 import './Toolbar.css';
 
 function Toolbar({ onReloadPreview }) {
@@ -10,6 +11,8 @@ function Toolbar({ onReloadPreview }) {
 
     return (
         <div className="toolbar">
+            <NimbusMark href="/" compact />
+            <span className="toolbar-divider" aria-hidden="true" />
             <span className="toolbar-project-name">{projectId}</span>
             <div className="toolbar-spacer" />
             <span className={`toolbar-status ${port ? 'toolbar-status-running' : 'toolbar-status-idle'}`}>

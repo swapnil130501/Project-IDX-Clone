@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "38px",
+        "createdAt": "2026-08-26T14:23:09.392Z",
+        "reason": "documented in DESIGN.md as the mobile step of the Display hierarchy (56px desktop / 38px mobile); pre-existing, not introduced by this change"
+      }
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import NimbusButton from '../../atoms/NimbusButton/NimbusButton';
 
-function LandingHero({ onCta }) {
+function LandingHero({ onCta, error }) {
     const reduceMotion = useReducedMotion();
 
     const container = {
@@ -45,10 +45,28 @@ function LandingHero({ onCta }) {
             <motion.div variants={item} className="mt-9">
                 <NimbusButton onClick={onCta}>Start building →</NimbusButton>
             </motion.div>
+
+            <AnimatePresence>
+                {error && (
+                    <motion.p
+                        key="error"
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                        className="mt-3 font-ui text-[13.5px] text-danger"
+                    >
+                        {error}
+                    </motion.p>
+                )}
+            </AnimatePresence>
         </motion.section>
     );
 }
 
-LandingHero.propTypes = { onCta: PropTypes.func.isRequired };
+LandingHero.propTypes = {
+    onCta: PropTypes.func.isRequired,
+    error: PropTypes.string,
+};
 
 export default LandingHero;

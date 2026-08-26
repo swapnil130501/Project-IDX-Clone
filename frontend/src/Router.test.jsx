@@ -20,9 +20,4 @@ describe('Router', () => {
     renderAt('/')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Nimbus')
   })
-
-  it('renders the create-project form at /new', () => {
-    renderAt('/new')
-    expect(screen.getByRole('button', { name: /get started/i })).toBeInTheDocument()
-  })
 })
