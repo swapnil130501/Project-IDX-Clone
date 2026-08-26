@@ -17,7 +17,8 @@ export const handleContainerCreate = async (projectId, terminalSocket, req, tcpS
 
         // Delete any existing container running with same name
         const existingContainer = await docker.listContainers({
-            name: projectId
+            all: true,
+            filters: { name: [projectId] }
         });
 
         console.log("Existing container", existingContainer);
@@ -81,7 +82,8 @@ export const handleContainerCreate = async (projectId, terminalSocket, req, tcpS
 
 export async function getContainerPort(containerName) {
     const container = await docker.listContainers({
-        name: containerName
+        all: true,
+        filters: { name: [containerName] }
     });
 
     if(container.length > 0) {

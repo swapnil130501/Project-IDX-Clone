@@ -33,3 +33,6 @@ webSocketForTerminal.on("connection", async (ws, req, container) => {
         handleTerminalCreation(container, ws);
     } 
 });
+
+
+//npm run dev --host 0.0.0.0

@@ -15,11 +15,20 @@ export const Browser = ({ projectId }) => {
     const { reloadCount } = usePreviewReloadStore();
 
     useEffect(() => {
-        if (!port) {
-            editorSocket?.emit("getPort", {
-                containerName: projectId
-            });
+        if (port || !editorSocket) {
+            return;
         }
+
+        editorSocket.emit("getPort", { containerName: projectId });
+
+        // The container can still be (re)starting when this fires, so a single
+        // request can race it and come back empty with nothing to retry it.
+        // Poll until a port actually comes back.
+        const retryId = setInterval(() => {
+            editorSocket.emit("getPort", { containerName: projectId });
+        }, 2000);
+
+        return () => clearInterval(retryId);
     }, [port, editorSocket, projectId]);
 
     useEffect(() => {
