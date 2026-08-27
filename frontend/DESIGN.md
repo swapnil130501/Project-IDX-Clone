@@ -21,6 +21,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.02
     letterSpacing: "-0.03em"
+  headline:
+    fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif"
+    fontSize: "32px"
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: "-0.01em"
   title:
     fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif"
     fontSize: "15px"
@@ -82,7 +88,7 @@ components:
 
 Nimbus reads like a drafting table left on at night: a near-black workspace, one precise blue for anything actionable, and a faint ruled grid on the landing page that ties the product's identity to the craft of building. Nothing here is decorative — the interface is a tool, not a showroom, and every visual choice (flat surfaces, hairline dividers, monospace chrome) reinforces that this is a place for making things, not a marketing surface pretending to be one. It deliberately does not chase the bright, colorful, rounded-corner SaaS look common to competitor dev-tool landing pages (CodeSandbox, Replit); it stays closer to the terminal and the editor it contains.
 
-Depth is conveyed entirely through tone steps and 1px hairlines, never shadows — three background layers (base → surface → elevated) plus consistent `line`/`line-strong` borders separate every pane, card, and tab. Motion is restrained but not absent: it exists specifically to make the interface feel snappy and responsive at the moment of interaction — a tap scale on rows and buttons, a spring-driven chevron rotation, a sliding active-tab underline — always gated behind `prefers-reduced-motion`.
+Depth is conveyed entirely through tone steps and 1px hairlines, never shadows — three background layers (base → surface → elevated) plus consistent `line`/`line-strong` borders separate every pane, card, and tab. Motion is restrained but not absent: it exists specifically to make the interface feel snappy and responsive at the moment of interaction — a tap scale on rows and buttons, a spring-driven chevron rotation, a sliding active-tab underline, a brief staggered rise-in on the hero's headline/body/CTA — always gated behind `prefers-reduced-motion`.
 
 **Key Characteristics:**
 - Near-black, three-step tonal surface system with zero shadows
@@ -106,7 +112,8 @@ The palette is almost monochrome by design: three near-black tones for surfaces,
 - **Ink** (`#e6e6e6`): primary text.
 - **Ink, Dimmed** (`#9a9a9a`): secondary text — hero value prop, feature card body copy, inactive-but-expanded tree text.
 - **Ink, Faint** (`#7a7a7a`): the quietest text step — chevrons at rest, inactive tab labels.
-- **Success** (`#3fb950`) / **Danger** (`#f85149`): reserved status colors carried from `tokens.css`; not yet exercised by any documented component.
+- **Success** (`#3fb950`): status color signaling a running/ready state — the product demo's "running" indicator dot and its terminal's `✓ live preview synced` line.
+- **Danger** (`#f85149`): reserved status color for error states (e.g. the hero's create-project error message); carried from `tokens.css`.
 
 ### Named Rules
 **The One Accent Rule.** Drafting Blue is the only color in the system that signals "this is active or actionable." It never appears as decoration — only on a primary CTA, an active indicator, or a focus ring.
@@ -120,6 +127,7 @@ The palette is almost monochrome by design: three near-black tones for surfaces,
 
 ### Hierarchy
 - **Display** (weight 600, 56px / 1.02 line-height, `-0.03em` tracking; 38px on mobile): the Nimbus wordmark in the landing hero — the only place this size is used.
+- **Headline** (weight 600, 32px / 1.15 line-height, `-0.01em` tracking; 26px on mobile): section titles below the hero (Product Demo, How It Works, Positioning) — one step down from Display, reserved for section-opening statements rather than the page's own name. Leads its section directly; no eyebrow or kicker precedes it (see Do's and Don'ts).
 - **Title** (weight 600, 15px, `-0.01em` tracking): header logo text and feature-card titles.
 - **Body** (weight 400, 18px / 1.55, max-width 34rem): the hero value proposition — the only large-body-copy moment in the system.
 - **Body, small** (weight 400, 13.5px / 1.55): feature-card descriptions.
@@ -131,7 +139,10 @@ The palette is almost monochrome by design: three near-black tones for surfaces,
 
 ## Layout
 
-The landing page is a single-column hero (`max-w-3xl`) followed by a three-column feature grid (`max-w-5xl`, collapsing to one column below `sm`), both inset with generous horizontal padding (24px mobile, 40px desktop) and no visible container border. The IDE workspace (`ProjectPlayground`) is a fixed-height (100vh) three-pane layout — file tree, editor, terminal/preview — built on the Allotment resizable-panel library, so exact pane widths are user-adjustable rather than fixed by the design system. Tab and tree row density is tight and IDE-appropriate: 32px tab height, 24px tree row height, 14px indent per nesting depth.
+The entire landing page — header, hero, and every section below it — sits inside one shared `max-w-5xl` column, horizontally centered on the viewport (`mx-auto`). Inside that centered column, content stays left-set: the hero's own `max-w-3xl` narrows further within it, and the header, product demo, feature grid, process list, and positioning section all run the column's full width. This gives wide viewports even margins on both sides instead of the content hugging the left edge, while preserving a single consistent left rag across every section. Each section is inset with generous horizontal padding (24px mobile, 40px desktop); the two sections that follow another content-heavy section (How It Works, Positioning) add a small top pad (`pt-4`/`sm:pt-8`) so their headline doesn't read as crowded against the block above, and every section closes with a `pb-24`–`pb-28` bottom rhythm. Every section below the hero leads directly with its Headline — no eyebrow or kicker precedes it (see Do's and Don'ts) — so the heading itself, not a caption above it, is what the scroll reads first. The IDE workspace (`ProjectPlayground`) is a fixed-height (100vh) three-pane layout — file tree, editor, terminal/preview — built on the Allotment resizable-panel library, so exact pane widths are user-adjustable rather than fixed by the design system. Tab and tree row density is tight and IDE-appropriate: 32px tab height, 24px tree row height, 14px indent per nesting depth.
+
+### Named Rules
+**The Centered Column Rule.** The page is one `max-w-5xl`, `mx-auto` column, not independently-centered sections — every section's max-width nests inside it rather than declaring and centering its own.
 
 ## Elevation & Depth
 
@@ -154,7 +165,7 @@ Two radius steps cover the whole system: a tight **Chip** radius (`6px`) for but
 
 ### Tree rows (`TreeRow`)
 - **Style:** full-width row, 24px tall, mono type, chevron (folders) or `FileIcon` (files) at 14px indent per depth level.
-- **State:** inactive/collapsed rows sit at `ink-dim`; an expanded folder or its label brightens to `ink`. Hover washes the row with `bg-hover` (a 4.5%-opacity white wash) and brightens text to `ink`.
+- **State:** inactive/collapsed rows sit at `ink-dim`; an expanded folder or its label brightens to `ink`. The active row gets a faint Drafting Blue wash (`bg-accent/10`) with `ink` text — the only place the accent tints a background rather than filling or outlining one. Hover washes the row with `bg-hover` (a 4.5%-opacity white wash) and brightens text to `ink`.
 - **Motion:** the folder chevron rotates 90° on expand via a spring (stiffness 500 / damping 34); rows compress slightly (`scale: 0.995`) on tap.
 
 ### Editor tabs (`EditorTab`)
@@ -168,8 +179,31 @@ Two radius steps cover the whole system: a tight **Chip** radius (`6px`) for but
 - **Border:** 1px `line`, brightening to `line-strong` on hover.
 - **Internal padding:** 20px (`p-5`).
 
+### Spinner (`Spinner`)
+- **Style:** a rotating ring — `line-strong` border with an `accent` top segment (`border-t-accent`), two sizes (`sm` 16px / `md` 32px).
+- **Rule:** the one loading indicator in the system. Every async wait (workspace creation, file tree fetch, live preview boot) uses this component rather than a bespoke spinner or plain "Loading…" text.
+- **Motion:** continuous linear rotation; frozen (static ring, no spin) under `prefers-reduced-motion`.
+
+### Status dot (Toolbar, Browser address bar)
+- **Style:** a 6px filled circle — `text-muted`/`ink-faint` at rest or idle, `success` when the underlying process is live.
+- **Motion:** a live `success` dot pulses (opacity 1 → 0.4 → 1, 2s ease-in-out loop); an idle dot never animates. Disabled under `prefers-reduced-motion`.
+- **Rule:** this is the system's live/idle signal, used identically in the workspace toolbar ("Running"/"Starting…") and the preview pane's address bar — one status-dot vocabulary everywhere a background process's state needs surfacing.
+
+### Terminal header
+- **Style:** a 28px flush bar above the terminal canvas — `line` bottom border, a terminal glyph plus the mono, `ink-faint` label "Terminal" — matching the Editor tab bar's height register and hairline language rather than introducing a new one.
+
+### Browser address bar
+- **Style:** 32px bar, `surface` background, `line` bottom border. Left-to-right: a live-status dot (see above), a `bg-elevated` chip-radius pill holding the mono URL (truncates with ellipsis), and a ghost reload icon button (`text-secondary`, hovers to `bg-elevated`/`ink`).
+- **Rule:** every pane that runs a background process (terminal, preview) gets a slim header bar in this vocabulary — the workspace has no unlabeled panes.
+
+### Allotment resize handles
+Allotment ships its own VS Code-blue focus color and a generic gray separator. Both are retokenized at the workspace root (`--focus-border: var(--accent)`, `--separator-border: var(--border-subtle)`) so pane dividers read as Nimbus, not as an unstyled third-party default.
+
 ### Grid backdrop (`GridBackdrop`) — signature element
 A static, non-animated graph-paper texture: a fine 28px grid layered under a stronger 140px grid, both at low opacity (3.5%/6% white), masked with a radial gradient so it fades out toward the bottom of the viewport. It is the one purely ornamental element in the system and is confined to the landing hero — it does not appear inside the IDE workspace.
+
+### Product demo (`ProductDemo`) — signature element
+A `surface`-background, `line`-bordered panel built entirely from real IDE atoms (`TreeRow`, `EditorTab`) rather than a screenshot or illustration, proving "the interface is the product." A compact tree (`src` → `App.jsx` active, `index.css`) sits beside a single active editor tab showing a real JSX snippet; a terminal strip below types `npm run dev` character-by-character, then reveals its output (`VITE ready…`, a Drafting-Blue `Local:` URL, a Signal-Green `✓ live preview synced` line) and a pulsing Signal-Green "running" dot in the panel header. Runs once, triggered on scroll-into-view; instant and static under `prefers-reduced-motion`. First documented use of `success` as a status color rather than a reserved, unused token.
 
 ## Do's and Don'ts
 
@@ -184,3 +218,6 @@ A static, non-animated graph-paper texture: a fine 28px grid layered under a str
 - **Don't** reach for bright, saturated, or multi-color palettes reminiscent of playful SaaS dev-tool landing pages (CodeSandbox/Replit-style) — Nimbus stays close to a terminal's restraint.
 - **Don't** let the grid backdrop (or any purely decorative texture) migrate into the IDE workspace panes — it is a landing-page-only signature, not a global background.
 - **Don't** use a radius outside the two established steps (`6px` chip / `10px` card).
+- **Don't** put an eyebrow or kicker label above a section Headline — the heading carries its own weight; a landing section leads with it directly.
+- **Don't** wrap a section's content in a card (border/background/padding container) when it isn't a discrete, comparable item like a feature card or the product demo — a full-width section on the page background reads clearer than a card nested inside the page's own framing.
+- **Don't** use `ink-faint` for text that must be read (labels, captions, prompts) — it fails the 4.5:1 contrast floor at the sizes this system uses it. Reserve `ink-faint` for decorative marks (chevrons, carets) and use `ink-dim` for small quiet text instead.

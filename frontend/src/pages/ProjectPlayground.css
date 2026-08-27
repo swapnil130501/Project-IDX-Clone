@@ -5,6 +5,11 @@
     font-family: var(--font-mono);
     background-color: var(--bg-base);
     color: var(--text-primary);
+    /* Allotment ships its own VS Code-blue focus ring and generic gray
+       separator; retheme both to Nimbus's accent and line tokens so the
+       resize handles read as part of this system, not a foreign library. */
+    --focus-border: var(--accent);
+    --separator-border: var(--border-subtle);
 }
 
 .playground-body {
@@ -17,9 +22,8 @@
 .browser-terminal {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    padding: var(--space-2);
     height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     border-top: 1px solid var(--border-subtle);
 }
 

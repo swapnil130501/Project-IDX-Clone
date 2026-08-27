@@ -3,6 +3,7 @@ import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css"; // required styles
 import { AttachAddon } from "@xterm/addon-attach";
+import { VscTerminal } from "react-icons/vsc";
 import { useTerminalSocketStore } from "../../../store/terminalSocketStore.js";
 import "./BrowserTerminal.css";
 
@@ -28,7 +29,7 @@ function BrowserTerminal() {
                 cyan: "#3b82f6",
             },
             fontSize: 14,
-            fontFamily: "monospace",
+            fontFamily: "'Fira Code', ui-monospace, monospace",
             convertEol: true,
         });
 
@@ -63,7 +64,17 @@ function BrowserTerminal() {
         };
     }, [terminalSocket]);
 
-    return <div ref={terminalRef} className="terminal" id="terminal-container"></div>;
+    return (
+        <div className="flex h-full flex-col">
+            <div className="terminal-header">
+                <VscTerminal aria-hidden="true" />
+                <span>Terminal</span>
+            </div>
+            <div className="terminal-body">
+                <div ref={terminalRef} className="terminal" id="terminal-container"></div>
+            </div>
+        </div>
+    );
 }
 
 export default BrowserTerminal;

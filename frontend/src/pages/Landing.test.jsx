@@ -36,7 +36,9 @@ describe('Landing', () => {
 
   it('renders three feature highlights', () => {
     renderLanding()
-    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(3)
+    expect(screen.getByRole('heading', { name: /instant workspaces/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /a real editor/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /live preview/i })).toBeInTheDocument()
   })
 
   it('creates a project and navigates to it from the hero CTA', async () => {

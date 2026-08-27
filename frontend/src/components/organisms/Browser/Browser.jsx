@@ -1,9 +1,11 @@
 // frontend/src/components/organisms/Browser/Browser.jsx
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { VscRefresh } from "react-icons/vsc";
 import { useEditorSocketStore } from "../../../store/editorSocketStore";
 import { usePortStore } from "../../../store/portStore";
 import { usePreviewReloadStore } from "../../../store/previewReloadStore";
+import Spinner from "../../atoms/Spinner/Spinner";
 import "./Browser.css";
 
 export const Browser = ({ projectId }) => {
@@ -12,7 +14,7 @@ export const Browser = ({ projectId }) => {
     const isFirstRender = useRef(true);
     const { port } = usePortStore();
     const { editorSocket } = useEditorSocketStore();
-    const { reloadCount } = usePreviewReloadStore();
+    const { reloadCount, triggerReload } = usePreviewReloadStore();
 
     useEffect(() => {
         if (port || !editorSocket) {
@@ -44,12 +46,29 @@ export const Browser = ({ projectId }) => {
     }, [reloadCount]);
 
     if (!port) {
-        return <div className="browser-loading">Loading preview…</div>;
+        return (
+            <div className="browser-loading">
+                <Spinner size="sm" />
+                <span>Loading preview…</span>
+            </div>
+        );
     }
 
     return (
         <div className="browser-pane">
-            <div className="browser-address-bar">{`http://localhost:${port}`}</div>
+            <div className="browser-address-bar">
+                <span className="browser-address-status" aria-hidden="true" />
+                <span className="browser-address-url">{`localhost:${port}`}</span>
+                <button
+                    type="button"
+                    className="browser-address-reload"
+                    onClick={triggerReload}
+                    title="Reload preview"
+                    aria-label="Reload preview"
+                >
+                    <VscRefresh />
+                </button>
+            </div>
             <iframe
                 ref={browserRef}
                 className="browser-frame"

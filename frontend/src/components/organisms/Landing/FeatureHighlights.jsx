@@ -16,7 +16,7 @@ const FEATURES = [
 function FeatureHighlights() {
     return (
         <section className="relative z-10 px-6 pb-24 sm:px-10">
-            <div className="grid gap-4 sm:grid-cols-3 max-w-5xl">
+            <div className="grid gap-4 sm:grid-cols-3">
                 {FEATURES.map((feature) => (
                     <div
                         key={feature.title}

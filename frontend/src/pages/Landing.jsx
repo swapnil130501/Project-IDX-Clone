@@ -5,6 +5,9 @@ import GridBackdrop from '../components/atoms/GridBackdrop/GridBackdrop';
 import LandingHeader from '../components/organisms/Landing/LandingHeader';
 import LandingHero from '../components/organisms/Landing/LandingHero';
 import FeatureHighlights from '../components/organisms/Landing/FeatureHighlights';
+import ProductDemo from '../components/organisms/Landing/ProductDemo';
+import HowItWorks from '../components/organisms/Landing/HowItWorks';
+import Positioning from '../components/organisms/Landing/Positioning';
 import CreatingWorkspace from '../components/organisms/Landing/CreatingWorkspace';
 import useCreateProject from '../hooks/apis/mutations/useCreateProject';
 
@@ -39,10 +42,14 @@ function Landing() {
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                        className="mx-auto max-w-5xl"
                     >
                         <LandingHeader onCta={handleCreateProject} />
                         <LandingHero onCta={handleCreateProject} error={error} />
+                        <ProductDemo />
                         <FeatureHighlights />
+                        <HowItWorks />
+                        <Positioning />
                     </motion.div>
                 )}
             </AnimatePresence>

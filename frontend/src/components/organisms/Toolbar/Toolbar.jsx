@@ -16,6 +16,7 @@ function Toolbar({ onReloadPreview }) {
             <span className="toolbar-project-name">{projectId}</span>
             <div className="toolbar-spacer" />
             <span className={`toolbar-status ${port ? 'toolbar-status-running' : 'toolbar-status-idle'}`}>
+                <span className="toolbar-status-dot" aria-hidden="true" />
                 {port ? 'Running' : 'Starting…'}
             </span>
             <button

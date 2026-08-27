@@ -29,20 +29,20 @@ function LandingHero({ onCta, error }) {
         >
             <motion.h1
                 variants={item}
-                className="font-ui text-[38px] sm:text-[56px] font-semibold leading-[1.02] tracking-[-0.03em] text-ink"
+                className="font-ui text-[38px] sm:text-[56px] font-semibold leading-[1.02] tracking-[-0.032em] text-ink"
             >
                 Nimbus
             </motion.h1>
 
             <motion.p
                 variants={item}
-                className="mt-5 max-w-[34rem] font-ui text-[18px] leading-[1.55] text-ink-dim"
+                className="mt-4 max-w-[34rem] font-ui text-[18px] leading-[1.55] text-ink-dim"
             >
                 A full development environment in your browser. Open a project, edit,
                 run, and preview — no local setup, no waiting.
             </motion.p>
 
-            <motion.div variants={item} className="mt-9">
+            <motion.div variants={item} className="mt-12">
                 <NimbusButton onClick={onCta}>Start building →</NimbusButton>
             </motion.div>
 

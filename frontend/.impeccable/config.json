@@ -8,6 +8,12 @@
         "value": "38px",
         "createdAt": "2026-08-26T14:23:09.392Z",
         "reason": "documented in DESIGN.md as the mobile step of the Display hierarchy (56px desktop / 38px mobile); pre-existing, not introduced by this change"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "26px",
+        "createdAt": "2026-08-27T00:00:00.000Z",
+        "reason": "documented in DESIGN.md as the mobile step of the new Headline hierarchy (32px desktop / 26px mobile), used by the Product Demo, How It Works, and Positioning section titles"
       }
     ]
   }

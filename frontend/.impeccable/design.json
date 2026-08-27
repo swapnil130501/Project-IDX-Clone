@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-26T00:00:00Z",
+  "generatedAt": "2026-08-27T00:00:00Z",
   "title": "Design System: Nimbus",
   "extensions": {
     "colorMeta": {
@@ -14,11 +14,12 @@
       "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#e6e6e6", "tonalRamp": ["#3a3a3a", "#565656", "#7a7a7a", "#9a9a9a", "#b8b8b8", "#d0d0d0", "#e6e6e6", "#f5f5f5"] },
       "ink-dim": { "role": "neutral", "displayName": "Ink, Dimmed", "canonical": "#9a9a9a", "tonalRamp": ["#3a3a3a", "#565656", "#7a7a7a", "#9a9a9a", "#b8b8b8", "#d0d0d0", "#e6e6e6", "#f5f5f5"] },
       "ink-faint": { "role": "neutral", "displayName": "Ink, Faint", "canonical": "#7a7a7a", "tonalRamp": ["#3a3a3a", "#565656", "#7a7a7a", "#9a9a9a", "#b8b8b8", "#d0d0d0", "#e6e6e6", "#f5f5f5"] },
-      "success": { "role": "neutral", "displayName": "Signal Green", "canonical": "#3fb950", "tonalRamp": ["#0f2f14", "#175c1f", "#1f8a2b", "#2ea83c", "#3fb950", "#6ecb7a", "#a2dda9", "#d3eed6"] },
+      "success": { "role": "status", "displayName": "Signal Green", "canonical": "#3fb950", "tonalRamp": ["#0f2f14", "#175c1f", "#1f8a2b", "#2ea83c", "#3fb950", "#6ecb7a", "#a2dda9", "#d3eed6"] },
       "danger": { "role": "neutral", "displayName": "Signal Red", "canonical": "#f85149", "tonalRamp": ["#4a0d0a", "#7a1712", "#a8221a", "#d33228", "#f85149", "#f97e77", "#fbaba6", "#fdd7d4"] }
     },
     "typographyMeta": {
       "display": { "displayName": "Display", "purpose": "The Nimbus wordmark in the landing hero only." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles below the hero (Product Demo, How It Works, Positioning)." },
       "title": { "displayName": "Title", "purpose": "Header logo text and feature-card titles." },
       "body": { "displayName": "Body", "purpose": "Hero value proposition copy." },
       "body-small": { "displayName": "Body, Small", "purpose": "Feature card descriptions." },
@@ -59,7 +60,7 @@
       "refersTo": "tree-row",
       "description": "File-tree folder row with rotating chevron.",
       "html": "<button class=\"ds-tree-row ds-tree-row--folder\" type=\"button\" style=\"padding-left:6px\"><span class=\"ds-tree-chevron\" aria-hidden=\"true\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M9 6l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tree-label\">src</span></button>",
-      "css": ".ds-tree-row { display: flex; align-items: center; gap: 6px; width: 100%; height: 24px; border-radius: 6px; padding-right: 8px; cursor: pointer; text-align: left; background: transparent; border: none; font-family: 'Fira Code', ui-monospace, monospace; font-size: 13px; line-height: 1; color: #9a9a9a; } .ds-tree-row:hover { background: rgba(255,255,255,0.045); color: #e6e6e6; } .ds-tree-chevron { display: flex; height: 14px; width: 14px; align-items: center; justify-content: center; color: #7a7a7a; transition: transform 0.15s; } .ds-tree-row--folder.ds-expanded .ds-tree-chevron { transform: rotate(90deg); } .ds-tree-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }"
+      "css": ".ds-tree-row { display: flex; align-items: center; gap: 6px; width: 100%; height: 24px; border-radius: 6px; padding-right: 8px; cursor: pointer; text-align: left; background: transparent; border: none; font-family: 'Fira Code', ui-monospace, monospace; font-size: 13px; line-height: 1; color: #9a9a9a; } .ds-tree-row:hover { background: rgba(255,255,255,0.045); color: #e6e6e6; } .ds-tree-row--active { background: rgba(59,130,246,0.1); color: #e6e6e6; } .ds-tree-chevron { display: flex; height: 14px; width: 14px; align-items: center; justify-content: center; color: #7a7a7a; transition: transform 0.15s; } .ds-tree-row--folder.ds-expanded .ds-tree-chevron { transform: rotate(90deg); } .ds-tree-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }"
     },
     {
       "name": "Editor Tab",
@@ -68,6 +69,30 @@
       "description": "Open-file tab with active underline indicator.",
       "html": "<div class=\"ds-tab ds-tab--active\"><span class=\"ds-tab-label\">App.jsx</span><button class=\"ds-tab-close\" type=\"button\" aria-label=\"Close App.jsx\">×</button><span class=\"ds-tab-indicator\"></span></div>",
       "css": ".ds-tab { position: relative; display: inline-flex; height: 32px; align-items: center; gap: 8px; border-right: 1px solid #2a2a2a; padding: 0 8px 0 12px; font-family: 'Fira Code', ui-monospace, monospace; font-size: 12.5px; line-height: 1; cursor: pointer; background: #181818; color: #7a7a7a; transition: background-color 0.15s, color 0.15s; } .ds-tab--active { background: #1e1e1e; color: #e6e6e6; } .ds-tab:hover { background: rgba(255,255,255,0.045); color: #9a9a9a; } .ds-tab-close { display: flex; height: 16px; width: 16px; align-items: center; justify-content: center; border-radius: 6px; border: none; background: transparent; color: #7a7a7a; font-size: 13px; line-height: 1; opacity: 0; transition: opacity 0.15s, background-color 0.15s, color 0.15s; } .ds-tab--active .ds-tab-close { opacity: 1; } .ds-tab:hover .ds-tab-close { opacity: 1; } .ds-tab-close:hover { background: #2a2a2a; color: #e6e6e6; } .ds-tab-indicator { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #3b82f6; }"
+    },
+    {
+      "name": "Product Demo Panel",
+      "kind": "custom",
+      "refersTo": "product-demo",
+      "description": "Signature landing element: a real mini IDE (tree + editor tab + terminal) that types out a run sequence once scrolled into view.",
+      "html": "<div class=\"ds-demo\"><div class=\"ds-demo-titlebar\"><span>nimbus · src/App.jsx</span><span class=\"ds-demo-status\"><span class=\"ds-demo-dot\"></span>running</span></div><div class=\"ds-demo-term\">$ npm run dev<br/><span class=\"ds-demo-dim\">  VITE v6  ready in 312 ms</span><br/><span class=\"ds-demo-accent\">  ➔  Local:   http://localhost:5173/</span><br/><span class=\"ds-demo-success\">  ✓ live preview synced</span></div></div>",
+      "css": ".ds-demo { border-radius: 10px; border: 1px solid #2a2a2a; background: #1e1e1e; font-family: 'Fira Code', ui-monospace, monospace; } .ds-demo-titlebar { display: flex; height: 32px; align-items: center; justify-content: space-between; border-bottom: 1px solid #2a2a2a; padding: 0 12px; font-size: 12.5px; color: #7a7a7a; } .ds-demo-status { display: flex; align-items: center; gap: 6px; } .ds-demo-dot { height: 6px; width: 6px; border-radius: 50%; background: #3fb950; } .ds-demo-term { border-top: 1px solid #2a2a2a; background: #181818; padding: 12px 16px; font-size: 12.5px; line-height: 1.7; color: #9a9a9a; } .ds-demo-dim { color: #7a7a7a; } .ds-demo-accent { color: #3b82f6; } .ds-demo-success { color: #3fb950; }"
+    },
+    {
+      "name": "Spinner",
+      "kind": "custom",
+      "refersTo": "spinner",
+      "description": "The system's one loading indicator — used for workspace creation, file-tree fetch, and preview boot.",
+      "html": "<span class=\"ds-spinner\" aria-hidden=\"true\"></span>",
+      "css": ".ds-spinner { display: inline-block; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #3a3a3d; border-top-color: #3b82f6; animation: ds-spin 0.8s linear infinite; } @keyframes ds-spin { to { transform: rotate(360deg); } }"
+    },
+    {
+      "name": "Browser Address Bar",
+      "kind": "custom",
+      "refersTo": "browser-address-bar",
+      "description": "Preview pane header: live-status dot, mono URL pill, ghost reload button.",
+      "html": "<div class=\"ds-address-bar\"><span class=\"ds-address-dot\"></span><span class=\"ds-address-url\">localhost:5173</span><button class=\"ds-address-reload\" type=\"button\" aria-label=\"Reload preview\">&#8635;</button></div>",
+      "css": ".ds-address-bar { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px; background: #1e1e1e; border-bottom: 1px solid #2a2a2a; } .ds-address-dot { width: 6px; height: 6px; border-radius: 50%; background: #3fb950; flex-shrink: 0; } .ds-address-url { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 8px; border-radius: 6px; background: #2a2a2a; color: #9a9a9a; font-family: 'Fira Code', ui-monospace, monospace; font-size: 12px; } .ds-address-reload { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: none; border-radius: 6px; background: transparent; color: #9a9a9a; cursor: pointer; } .ds-address-reload:hover { background: #2a2a2a; color: #e6e6e6; }"
     },
     {
       "name": "Feature Card",
@@ -80,7 +105,7 @@
   ],
   "narrative": {
     "northStar": "The Graph Paper Studio",
-    "overview": "Nimbus reads like a drafting table left on at night: a near-black workspace, one precise blue for anything actionable, and a faint ruled grid on the landing page that ties the product's identity to the craft of building. Nothing here is decorative — the interface is a tool, not a showroom, and every visual choice (flat surfaces, hairline dividers, monospace chrome) reinforces that this is a place for making things, not a marketing surface pretending to be one. It deliberately does not chase the bright, colorful, rounded-corner SaaS look common to competitor dev-tool landing pages (CodeSandbox, Replit); it stays closer to the terminal and the editor it contains.\n\nDepth is conveyed entirely through tone steps and 1px hairlines, never shadows — three background layers (base → surface → elevated) plus consistent line/line-strong borders separate every pane, card, and tab. Motion is restrained but not absent: it exists specifically to make the interface feel snappy and responsive at the moment of interaction — a tap scale on rows and buttons, a spring-driven chevron rotation, a sliding active-tab underline — always gated behind prefers-reduced-motion.",
+    "overview": "Nimbus reads like a drafting table left on at night: a near-black workspace, one precise blue for anything actionable, and a faint ruled grid on the landing page that ties the product's identity to the craft of building. Nothing here is decorative — the interface is a tool, not a showroom, and every visual choice (flat surfaces, hairline dividers, monospace chrome) reinforces that this is a place for making things, not a marketing surface pretending to be one. It deliberately does not chase the bright, colorful, rounded-corner SaaS look common to competitor dev-tool landing pages (CodeSandbox, Replit); it stays closer to the terminal and the editor it contains.\n\nDepth is conveyed entirely through tone steps and 1px hairlines, never shadows — three background layers (base → surface → elevated) plus consistent line/line-strong borders separate every pane, card, and tab. Motion is restrained but not absent: it exists specifically to make the interface feel snappy and responsive at the moment of interaction — a tap scale on rows and buttons, a spring-driven chevron rotation, a sliding active-tab underline, a brief staggered rise-in on the hero's headline/body/CTA — always gated behind prefers-reduced-motion.",
     "keyCharacteristics": [
       "Near-black, three-step tonal surface system with zero shadows",
       "A single accent color (Drafting Blue) used only for actionable/active state, never decoration",
@@ -91,7 +116,8 @@
     "rules": [
       { "name": "The One Accent Rule", "body": "Drafting Blue is the only color in the system that signals \"this is active or actionable.\" It never appears as decoration — only on a primary CTA, an active indicator, or a focus ring.", "section": "colors" },
       { "name": "The Mono-Means-Code Rule", "body": "Monospace type is reserved for surfaces that represent the file system or open files (tree rows, tabs). Everything else — headings, prose, buttons — uses the system sans, even inside the IDE chrome.", "section": "typography" },
-      { "name": "The Flat-By-Default Rule", "body": "Nothing casts a shadow. Every visual separation between surfaces is a tone step or a hairline, never a blur.", "section": "elevation" }
+      { "name": "The Flat-By-Default Rule", "body": "Nothing casts a shadow. Every visual separation between surfaces is a tone step or a hairline, never a blur.", "section": "elevation" },
+      { "name": "The Centered Column Rule", "body": "The page is one max-w-5xl, mx-auto column, not independently-centered sections — every section's max-width nests inside it rather than declaring and centering its own.", "section": "layout" }
     ],
     "dos": [
       "Do ration Drafting Blue to actionable/active moments only — CTAs, active indicators, focus rings.",
@@ -103,7 +129,10 @@
       "Don't introduce box-shadow anywhere — the system is flat by rule, not by accident.",
       "Don't reach for bright, saturated, or multi-color palettes reminiscent of playful SaaS dev-tool landing pages (CodeSandbox/Replit-style) — Nimbus stays close to a terminal's restraint.",
       "Don't let the grid backdrop (or any purely decorative texture) migrate into the IDE workspace panes — it is a landing-page-only signature, not a global background.",
-      "Don't use a radius outside the two established steps (6px chip / 10px card)."
+      "Don't use a radius outside the two established steps (6px chip / 10px card).",
+      "Don't put an eyebrow or kicker label above a section Headline — the heading carries its own weight; a landing section leads with it directly.",
+      "Don't wrap a section's content in a card when it isn't a discrete, comparable item like a feature card or the product demo.",
+      "Don't use ink-faint for text that must be read (labels, captions, prompts) — it fails the 4.5:1 contrast floor at the sizes this system uses it; use ink-dim instead."
     ]
   }
 }

@@ -5,6 +5,7 @@ import { useFileContextMenuStore } from '../../../store/fileContextMenuStore';
 import FileContextMenu from '../../molecules/ContextMenu/FileContextMenu';
 import FolderContextMenu from '../../molecules/ContextMenu/FolderContextMenu';
 import { useFolderContextMenuStore } from '../../../store/folderContextMenuStore';
+import Spinner from '../../atoms/Spinner/Spinner';
 
 function TreeStructure() {
 
@@ -43,9 +44,10 @@ function TreeStructure() {
             ) : treeStructure ? (
                 <Tree data={treeStructure} />
             ) : (
-                <p className="px-2 py-2 font-ui text-[13px] text-ink-faint">
-                    Loading files…
-                </p>
+                <div className="flex items-center gap-2 px-2 py-2">
+                    <Spinner size="sm" />
+                    <p className="font-ui text-[13px] text-ink-faint">Loading files…</p>
+                </div>
             )}
         </>
     );
